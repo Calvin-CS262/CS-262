@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">calUber</string>
+    <string name="date_text">Date</string>
+    <string name="time_text">Time</string>
+    <string name="s_l_text">Starting Location</string>
+    <string name="des_text">Destination</string>
+    <string name="n_p_text">Number of Passengers</string>
+    <string name="create_button">Create</string>
+    <string name="CreateARidePage">Create A Ride</string>
+</resources>
