@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".BasketActivity"
+            android:label="@string/title_activity_basket"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
