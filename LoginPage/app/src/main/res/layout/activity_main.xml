@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/calvin_maroon"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/CalUber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textSize="50sp"
+        android:text="@string/caluber"
+        android:fontFamily="serif"
+        android:textColor="#FFFFFFFF"/>
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/back_gray"
+        android:paddingLeft="@dimen/width_dim"
+        android:paddingRight="@dimen/width_dim"
+        android:paddingTop="@dimen/vertical_dim"
+        android:paddingBottom="@dimen/vertical_dim"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:layout_below="@+id/username"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@color/back_gray"
+        android:paddingLeft="@dimen/width_dim"
+        android:paddingRight="@dimen/width_dim"
+        android:paddingTop="@dimen/vertical_dim"
+        android:paddingBottom="@dimen/vertical_dim"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@+id/password"
+        android:text="@string/log_in"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="@dimen/width_dim"
+        android:paddingRight="@dimen/width_dim"
+        android:paddingTop="@dimen/vertical_dim"
+        android:paddingBottom="@dimen/vertical_dim"/>
+
+</RelativeLayout>
