@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CalUber Prototype</string>
+    <string name="user_profile">UserProfile</string>
 </resources>
