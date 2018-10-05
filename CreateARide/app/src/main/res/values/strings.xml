@@ -7,4 +7,10 @@
     <string name="n_p_text">Number of Passengers</string>
     <string name="create_button">Create</string>
     <string name="CreateARidePage">Create A Ride</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="create_a_ride">Create A Ride</string>
+    <string name="enter_time">Enter time you are available</string>
+    <string name="start_destination_text">Write starting location here</string>
+    <string name="write_here_dest">write destination here</string>
+    <string name="enter_number">Enter number</string>
 </resources>
