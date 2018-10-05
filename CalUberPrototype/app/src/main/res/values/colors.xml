@@ -2,8 +2,6 @@
 <resources>
     <color name="colorPrimary">#97252B</color>
     <color name="colorPrimaryDark">#97252B</color>
-    <color name="colorAccent">#97252B</color>
+    <color name="colorAccent">#EED202</color>
     <color name="graylight">#fafafa</color>
-    <color name="startblue">#09c6df</color>
-    <color name="endblue">#0bcce6</color>
 </resources>

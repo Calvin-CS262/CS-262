@@ -46,7 +46,7 @@
         tools:background="#F3CD00" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/bucketButton"
         android:layout_width="37dp"
         android:layout_height="37dp"
         android:layout_marginEnd="16dp"
@@ -56,7 +56,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_input_get"
         tools:background="#97252B"
-        android:onClick="launchUserProfile"
         tools:targetApi="#97252B" />
 
     <ImageButton
@@ -69,6 +68,20 @@
         app:srcCompat="@drawable/car"
         tools:background="#97252B"
         tools:layout_editor_absoluteY="117dp" />
+
+    <ImageButton
+        android:id="@+id/profileButton"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avatar"
+        tools:background="#97252B"
+        android:onClick="launchUserProfile"
+        tools:targetApi="#97252B" />
 
 
 </android.support.constraint.ConstraintLayout>

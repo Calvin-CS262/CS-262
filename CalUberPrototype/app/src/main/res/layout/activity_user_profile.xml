@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/graylight"
+    android:background="@color/colorAccent"
     android:orientation = "vertical"
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="405dp">
         <LinearLayout
-            android:background="@drawable/gradientbackground"
+            android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:orientation = "vertical">
@@ -31,7 +31,8 @@
                 android:text= "Name: "
                 android:textColor="#fff"
                 android:textStyle="bold"
-                android:textSize= "21sp"/>
+                android:textSize= "21sp"
+                android:typeface="sans"/>
         </LinearLayout>
     </RelativeLayout>
 
