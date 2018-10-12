@@ -1,25 +1,25 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.content.Intent;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login_page);
     }
 
-    public void launchUserProfile(View view) {
-        Intent intent = new Intent(this,UserProfile.class);
+    public void sign_up_page(View view) {
+        Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
     }
 
-    public void login_function(View view) {
-        Intent intent = new Intent(this, LoginPage.class);
+    public void go_to_home(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

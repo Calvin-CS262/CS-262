@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CalUber Prototype</string>
+    <string name="user_profile">UserProfile</string>
+    <string name="caluber">CalUber</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_prompt">Create a username and password</string>
 </resources>
