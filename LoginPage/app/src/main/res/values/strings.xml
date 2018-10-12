@@ -4,4 +4,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="caluber">CalUber</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_txt">Sign up</string>
+    <string name="create_a_username_and_password">Create a username and password</string>
 </resources>

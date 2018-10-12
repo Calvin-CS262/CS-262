@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/calvin_maroon"
-    tools:context=".MainActivity">
+    tools:context=".Signup">
 
     <TextView
-        android:id="@+id/CalUber"
+        android:id="@+id/signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:textSize="50sp"
-        android:text="@string/caluber"
+        android:layout_marginTop="180dp"
+        android:textSize="20sp"
+        android:text="@string/create_a_username_and_password"
         android:fontFamily="serif"
-        android:textColor="#FFFFFFFF"/>
+        android:textColor="@color/calvin_maroon"/>
 
     <EditText
         android:id="@+id/username"
@@ -48,28 +47,20 @@
         android:paddingBottom="@dimen/vertical_dim"/>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/signup_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_below="@+id/password"
-        android:text="@string/log_in"
+        android:text="@string/sign_up"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:paddingLeft="@dimen/width_dim"
         android:paddingRight="@dimen/width_dim"
         android:paddingTop="@dimen/vertical_dim"
         android:paddingBottom="@dimen/vertical_dim"
-        android:onClick="go_to_home"/>
-
-    <Button
-        android:id="@+id/sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up"
-        android:gravity="center"
-        android:layout_below="@+id/login"
-        android:layout_centerHorizontal="true"
-        android:onClick="sign_up_page"/>
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/calvin_maroon"
+        android:onClick="return_to_login"/>
 
 </RelativeLayout>
