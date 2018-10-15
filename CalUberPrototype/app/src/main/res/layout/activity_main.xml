@@ -17,7 +17,7 @@
         android:layout_marginBottom="76dp"
         android:layout_marginVertical="80dp"
         android:text="Start A Ride"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
