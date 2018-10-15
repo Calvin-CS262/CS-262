@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,5 +22,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, BasketActivity.class));
             }
         });
+    }
+
+    public void launchUserProfile(View view) {
+        Intent intent = new Intent(this,UserProfile.class);
+        startActivity(intent);
+
+    }
+
+    public void launchCreateRide(View view) {
+        Intent intent = new Intent(this,CreateRide.class);
+        startActivity(intent);
+    }
+
+    public void launchBasket(View view) {
+        Intent intent = new Intent(this,BasketActivity.class);
+        startActivity(intent);
     }
 }
