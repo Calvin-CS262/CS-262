@@ -2,6 +2,7 @@ CalUber is a ride sharing application that intends to link Calvin students toget
 
 We know there is a demand for such a service because the Free and For Sale Calvin Facebook page is frequently filled with posters looking for rides to or from Calvin, especially around holiday times. Our application would remove some of this clutter from the F&FS page and make it easier to connect with drivers. This application brings both drivers and passengers together on one platform to make communication quick and easy with the ability to quickly look up drivers, destinations and get in contact with drivers faster than scrolling through a large Facebook page.
 
+Specifications:
 - The user should be able to learn the application in less than five minutes.
 - The maximum acceptable system downtime would probably be about a day, depending on what time of the year it is. If it is close to a school break, maximum acceptable system downtime decreases dramatically, probably to a few hours.
 - The user should be able to create a profile page in ~4 min and create or join a ride in ~3 min. Our application size should not be greater than 930 MB.
