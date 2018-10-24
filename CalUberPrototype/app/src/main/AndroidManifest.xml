@@ -16,8 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserProfile" />
-        <activity android:name=".LoginPage" />
+        <activity
+            android:name=".BasketActivity"
+            android:label="@string/title_activity_basket"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".UserProfile"></activity>
+        <activity android:name=".CreateRide"></activity>
+        <activity android:name= ".LoginPage"></activity>
         <activity android:name=".Signup"></activity>
     </application>
 
