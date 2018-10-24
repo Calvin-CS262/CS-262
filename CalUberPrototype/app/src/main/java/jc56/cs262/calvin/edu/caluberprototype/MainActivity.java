@@ -22,11 +22,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, BasketActivity.class));
             }
         });
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 0b3672437c34d85560e5053f93cb16762ebc2003
     }
 
     public void launchUserProfile(View view) {
@@ -43,12 +38,10 @@ public class MainActivity extends AppCompatActivity {
     public void launchBasket(View view) {
         Intent intent = new Intent(this,BasketActivity.class);
         startActivity(intent);
-<<<<<<< HEAD
+
     }
     public void login_function(View view) {
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
-=======
->>>>>>> 0b3672437c34d85560e5053f93cb16762ebc2003
     }
 }
