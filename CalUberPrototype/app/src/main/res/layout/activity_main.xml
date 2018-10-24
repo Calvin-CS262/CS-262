@@ -86,7 +86,6 @@
         android:onClick="launchUserProfile"
         tools:targetApi="@color/colorPrimary" />
 
-<<<<<<< HEAD
     <Button
         android:id="@+id/button"
         android:text="@string/log_in"
@@ -104,7 +103,6 @@
         tools:background="@color/colorAccent"
         android:onClick="login_function"/>
 
-=======
->>>>>>> 0b3672437c34d85560e5053f93cb16762ebc2003
+
 
 </android.support.constraint.ConstraintLayout>
