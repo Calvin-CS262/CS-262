@@ -14,7 +14,7 @@ public class Signup extends AppCompatActivity {
     }
 
     public void return_to_login(View view) {
-        Intent intent = new Intent(this, LoginPage.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

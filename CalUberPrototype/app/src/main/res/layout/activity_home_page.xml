@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context=".HomePage">
+
+    <Button
+        android:id="@+id/startARide_button"
+        android:layout_width="204dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="76dp"
+        android:layout_marginVertical="80dp"
+        android:text="Start A Ride"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:background="@color/colorAccent"
+        android:onClick="launchCreateRide"/>
+
+    <Button
+        android:id="@+id/JoinARide_button"
+        android:layout_width="204dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginVertical="80dp"
+        android:text="Join A Ride"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.698"
+        tools:background="@color/colorAccent" />
+
+    <ImageButton
+        android:id="@+id/bucketButton"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_input_get"
+        tools:background="@color/colorPrimary"
+        android:onClick="launchBasket"/>
+
+    <ImageButton
+        android:id="@+id/bigCar"
+        android:layout_width="170dp"
+        android:layout_height="139dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/car2"
+        tools:background="@color/colorPrimary"
+        android:background="@color/colorPrimary"
+        tools:layout_editor_absoluteY="117dp" />
+
+    <ImageButton
+        android:id="@+id/profileButton"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avatar_small"
+        tools:background="@color/colorPrimary"
+        android:background="@color/colorPrimary"
+        android:onClick="launchUserProfile"
+        tools:targetApi="@color/colorPrimary" />
+
+</android.support.constraint.ConstraintLayout>
