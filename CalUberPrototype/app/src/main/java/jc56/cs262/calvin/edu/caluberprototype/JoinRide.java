@@ -11,45 +11,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-//NEED TO FIGURE OUT HOW TO MAKE LISTVIEW FILL ALL OF SCROLLVIEW
+public class JoinRide extends AppCompatActivity {
 
-public class BasketActivity extends AppCompatActivity {
-
-    String[] upcomingRideArray = {"newRide1","newRide2","newRide3","newRide4",
+    String[] availableArray = {"newRide1","newRide2","newRide3","newRide4",
             "newRide5"};
-    String[] upcomingDriveArray = {"newDrive1", "newDrive2", "newDrive3"};
-
-    String[] pastArray = {"PastRide1", "PastRide2", "PastRide3", "PastRide4",
-            "PastRide5", "PastRide6", "PastRide7"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basket);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_join_ride);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
         ArrayAdapter uRidesAdapter = new ArrayAdapter<String>(this,
-                R.layout.activity_listview, upcomingRideArray);
+                R.layout.activity_listview, availableArray);
 
-        ArrayAdapter uDrivesAdapter = new ArrayAdapter<String>(this,
-                R.layout.activity_listview, upcomingDriveArray);
-
-        ArrayAdapter pastAdapter = new ArrayAdapter<String>(this,
-                R.layout.activity_listview, pastArray);
-
-        ListView uRidesView = (ListView) findViewById(R.id.upcoming_rides);
+        ListView uRidesView = (ListView) findViewById(R.id.rides_available);
         uRidesView.setAdapter(uRidesAdapter);
         setListViewHeightBasedOnChildren(uRidesView);
-
-
-        ListView uDriveView = (ListView) findViewById(R.id.upcoming_drives);
-        uDriveView.setAdapter(uDrivesAdapter);
-        setListViewHeightBasedOnChildren(uDriveView);
-
-        ListView pastView = (ListView) findViewById(R.id.past_rides);
-        pastView.setAdapter(pastAdapter);
-        setListViewHeightBasedOnChildren(pastView);
     }
 
     /**** Method for Setting the Height of the ListView dynamically.

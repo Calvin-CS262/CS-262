@@ -14,14 +14,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button toBasket = (Button)findViewById(R.id.JoinARide_button);
+        //Button toBasket = (Button)findViewById(R.id.JoinARide_button);
 
-        toBasket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, BasketActivity.class));
-            }
-        });
+        //toBasket.setOnClickListener(new View.OnClickListener() {
+          //  @Override
+            //public void onClick(View v) {
+              //  startActivity(new Intent(MainActivity.this, JoinRide.class));
+           // }
+        //});
+    }
+
+    public void launchJoinRide(View view) {
+        Intent intent = new Intent(this, JoinRide.class);
+        startActivity(intent);
     }
 
     public void launchUserProfile(View view) {
