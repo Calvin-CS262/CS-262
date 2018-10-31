@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,34 +13,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Button toBasket = (Button)findViewById(R.id.JoinARide_button);
-
-        //toBasket.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-            //public void onClick(View v) {
-              //  startActivity(new Intent(MainActivity.this, JoinRide.class));
-           // }
-        //});
     }
 
-    public void launchJoinRide(View view) {
-        Intent intent = new Intent(this, JoinRide.class);
+    public void sign_up_page(View view) {
+        Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
     }
 
-    public void launchUserProfile(View view) {
-        Intent intent = new Intent(this,UserProfile.class);
-        startActivity(intent);
-
-    }
-
-    public void launchCreateRide(View view) {
-        Intent intent = new Intent(this,CreateRide.class);
+    public void go_to_home(View view) {
+        Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
 
-    public void launchBasket(View view) {
-        Intent intent = new Intent(this,BasketActivity.class);
-        startActivity(intent);
-    }
+
 }

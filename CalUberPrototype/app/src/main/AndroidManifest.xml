@@ -24,6 +24,8 @@
         <activity android:name=".UserProfile"></activity>
         <activity android:name=".CreateRide"></activity>
         <activity android:name=".JoinRide"></activity>
+        <activity android:name= ".HomePage"></activity>
+        <activity android:name=".Signup"></activity>
     </application>
 
 </manifest>
