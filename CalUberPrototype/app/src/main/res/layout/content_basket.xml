@@ -5,34 +5,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    android:weightSum="99"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".BasketActivity"
     tools:showIn="@layout/activity_basket">
 
-    <LinearLayout
-        android:layout_weight="1"
-        android:background="@color/colorPrimary"
-        android:layout_height="fill_parent"
-        android:layout_width="match_parent" >
+
+        <TextView
+            android:id="@+id/driveBasketTitle"
+            android:background="@color/colorAccent"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upcoming Rides as Driver"/>
+
+    <ScrollView
+        android:id="@+id/scroll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="33">
+
+        <ListView
+            android:id="@+id/upcoming_drives"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            app:layout_scrollFlags="scroll|enterAlways"></ListView>
+
+    </ScrollView>
+
+        <TextView
+            android:id="@+id/rideBasketTitle"
+            android:background="@color/colorAccent"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upcoming Rides as Passenger"/>
+
+    <ScrollView
+        android:id="@+id/scroll2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="33">
 
         <ListView
             android:id="@+id/upcoming_rides"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"></ListView>
 
-    <LinearLayout
-        android:layout_weight="1"
-        android:background="#2980b9"
-        android:layout_height="fill_parent"
-        android:layout_width="match_parent" >
+    </ScrollView>
+
+        <TextView
+            android:id="@+id/pastBasketTitle"
+            android:background="@color/colorAccent"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ride History"/>
+
+    <ScrollView
+        android:id="@+id/scroll3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="33">
 
         <ListView
             android:id="@+id/past_rides"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"></ListView>
+
+    </ScrollView>
 
 </LinearLayout>

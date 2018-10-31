@@ -13,14 +13,11 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        Button toBasket = (Button)findViewById(R.id.JoinARide_button);
+    }
 
-        toBasket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomePage.this, BasketActivity.class));
-            }
-        });
+    public void launchJoinRide(View view) {
+        Intent intent = new Intent(this, JoinRide.class);
+        startActivity(intent);
     }
 
 
