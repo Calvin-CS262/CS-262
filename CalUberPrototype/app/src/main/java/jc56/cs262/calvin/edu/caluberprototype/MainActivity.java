@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
     public void sign_up_page(View view) {
@@ -23,5 +24,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
+
 
 }

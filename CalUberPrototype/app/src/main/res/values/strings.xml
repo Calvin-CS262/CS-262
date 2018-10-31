@@ -20,8 +20,9 @@
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
     <string name="sign_up">Sign Up</string>
-    <string name="create_prompt">Enter the info and hit sign up</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="calvin_id">Calvin id</string>
+    <string name="create_prompt">Create a username and password</string>
+
 </resources>

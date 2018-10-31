@@ -7,4 +7,4 @@ Specifications:
 - The maximum acceptable system downtime would probably be about a day, depending on what time of the year it is. If it is close to a school break, maximum acceptable system downtime decreases dramatically, probably to a few hours.
 - The user should be able to create a profile page in ~4 min and create or join a ride in ~3 min. Our application size should not be greater than 930 MB.
 - For testability puposes, our application should have at least three tests for every feature to test every possible outcome (test driven development).
-- Since we don’t expect an overwhelming amount of users, we don’t believe our appklication performance should deteriorate; our application architecture will not grow organically with the growing traffic and user base. 
+- Since we don’t expect an overwhelming amount of users, we don’t believe our application performance should deteriorate; our application architecture will not grow organically with the growing traffic and user base. 
