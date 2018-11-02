@@ -27,13 +27,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="33">
-
-        <ListView
-            android:id="@+id/rides_available"
+        
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            app:layout_scrollFlags="scroll|enterAlways"></ListView>
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/rides_available"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layout_scrollFlags="scroll|enterAlways"></ListView>
+
+        </LinearLayout>
 
     </ScrollView>
 
