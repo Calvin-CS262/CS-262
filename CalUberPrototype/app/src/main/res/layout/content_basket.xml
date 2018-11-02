@@ -28,12 +28,18 @@
         android:layout_height="wrap_content"
         android:layout_weight="33">
 
-        <ListView
-            android:id="@+id/upcoming_drives"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            app:layout_scrollFlags="scroll|enterAlways"></ListView>
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/upcoming_drives"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:layout_scrollFlags="scroll|enterAlways"></ListView>
+        </LinearLayout>
 
     </ScrollView>
 
@@ -53,23 +59,29 @@
         android:layout_height="wrap_content"
         android:layout_weight="33">
 
-        <ListView
-            android:id="@+id/upcoming_rides"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"></ListView>
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/upcoming_rides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"></ListView>
+        </LinearLayout>
 
     </ScrollView>
 
-        <TextView
-            android:id="@+id/pastBasketTitle"
-            android:background="@color/colorAccent"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ride History"/>
+    <TextView
+        android:id="@+id/pastBasketTitle"
+        android:background="@color/colorAccent"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ride History"/>
 
     <ScrollView
         android:id="@+id/scroll3"
@@ -77,11 +89,18 @@
         android:layout_height="wrap_content"
         android:layout_weight="33">
 
-        <ListView
-            android:id="@+id/past_rides"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"></ListView>
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/past_rides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"></ListView>
+
+        </LinearLayout>
 
     </ScrollView>
 
