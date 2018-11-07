@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -26,6 +28,8 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
 
 
         Spinner spinner = findViewById(R.id.number);
+
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.numbers,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -36,6 +40,27 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
     public void datePicker(View view){
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.show(getSupportFragmentManager(),getString(R.string.datePicker));
+    }
+
+    public void toastMsg(String msg) {
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG );
+        toast.show();
+    }
+    public void submitRideMsg(View view){
+        toastMsg("Your ride is created! ");
+        TextView dateText = findViewById(R.id.date_text);
+        EditText TimeText = findViewById(R.id.time);
+        EditText StartText = findViewById(R.id.startPoint);
+        EditText EndText = findViewById(R.id.destination);
+        Spinner spinner = findViewById(R.id.number);
+        //set everything back to default
+        dateText.setText("");
+        TimeText.setText("");
+        StartText.setText("");
+        EndText.setText("");
+        spinner.setSelection(0);
+
+
     }
     private void setDate(final Calendar calendar) {
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
