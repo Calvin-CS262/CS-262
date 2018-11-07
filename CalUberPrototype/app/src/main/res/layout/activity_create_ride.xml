@@ -128,7 +128,8 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                tools:background="@color/colorAccent" />
+                tools:background="@color/colorAccent"
+                android:onClick ="submitRideMsg"/>
 
         </LinearLayout>
 </android.support.constraint.ConstraintLayout>
