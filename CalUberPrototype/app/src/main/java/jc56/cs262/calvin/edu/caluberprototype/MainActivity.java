@@ -5,8 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    //For presentation of logIn.
+    //ToDo: Use getter and compare instead of forcing
+    private String userName = "user1";
+    private String password = "pass1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +27,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toastMsg(String msg) {
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
     public void go_to_home(View view) {
-        Intent intent = new Intent(this, HomePage.class);
-        startActivity(intent);
+        EditText userNameText = findViewById(R.id.username);
+        EditText passwordText = findViewById(R.id.password);
+
+        if (userName.equals(userNameText.getText().toString()) &&
+                password.equals(passwordText.getText().toString()) ) {
+            Intent intent = new Intent(this, HomePage.class);
+            startActivity(intent);
+        }
+        else
+            toastMsg("Incorrect Username and Password");
     }
 
 

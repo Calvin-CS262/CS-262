@@ -75,18 +75,18 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
         setDate(cal);
     }
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String text = parent.getItemAtPosition(position).toString();
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
 
-            }
+    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
-            }
+    }
 
-            public static class DatePickerFragment extends DialogFragment {
+    public static class DatePickerFragment extends DialogFragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
