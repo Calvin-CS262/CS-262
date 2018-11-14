@@ -1,7 +1,11 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TimePicker;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -18,41 +22,94 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class CreateRide extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener
-        {
+public class CreateRide extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
+
+    //TODO: change time entry to widget selection as well
+    //TODO: implement google maps api to choose locations.
+    //this will help streamline the search parameters for
+    //finding a ride
+    //TODO: only allow users to click "create a ride" if all fields are filled in
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ride);
 
-
+        //for whatever reason the page crashes if you define view names outside of
+        //methods so we have to do it here and in submitRideMsg
         Spinner spinner = findViewById(R.id.number);
 
+        TextView dateText = findViewById(R.id.date_text);
+        EditText TimeText = findViewById(R.id.time);
+        EditText StartText = findViewById(R.id.startPoint);
+        EditText EndText = findViewById(R.id.destination);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.numbers,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
 
-    }
-    public void datePicker(View view){
-        DatePickerFragment fragment = new DatePickerFragment();
-        fragment.show(getSupportFragmentManager(),getString(R.string.datePicker));
+        //call hideKeyboard method when clicking outside of EditText boxes
+        TimeText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+        StartText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+        EndText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
     }
 
+    //method to hide android keyboard when not in an editText
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    //spinner to select date of departure
+    public void datePicker(View view) {
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.show(getSupportFragmentManager(), getString(R.string.datePicker));
+    }
+
+    //toast message
     public void toastMsg(String msg) {
-        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG );
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
         toast.show();
     }
-    public void submitRideMsg(View view){
+
+    //calling toast message after driver clicks "create a ride" button
+    //set all entry fields back to empty
+    public void submitRideMsg(View view) {
         toastMsg("Your ride is created! ");
+
+        Spinner spinner = findViewById(R.id.number);
+
         TextView dateText = findViewById(R.id.date_text);
         EditText TimeText = findViewById(R.id.time);
         EditText StartText = findViewById(R.id.startPoint);
         EditText EndText = findViewById(R.id.destination);
-        Spinner spinner = findViewById(R.id.number);
+
         //set everything back to default
         dateText.setText("");
         TimeText.setText("");
@@ -60,8 +117,9 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
         EndText.setText("");
         spinner.setSelection(0);
 
-
     }
+
+    //spinner for selecting date of departure
     private void setDate(final Calendar calendar) {
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
@@ -69,6 +127,8 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
                 .setText(dateFormat.format(calendar.getTime()));
 
     }
+
+    //set date to value that was selected via calendar widget
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Calendar cal = new GregorianCalendar(year, month, day);

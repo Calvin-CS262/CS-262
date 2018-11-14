@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class HomePage extends AppCompatActivity {
+    //home page after login.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

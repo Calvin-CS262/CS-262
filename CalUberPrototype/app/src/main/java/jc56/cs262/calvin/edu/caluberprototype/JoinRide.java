@@ -13,6 +13,10 @@ import android.widget.ListView;
 
 public class JoinRide extends AppCompatActivity {
 
+    //TODO: list all information of ride (date, time, start, destination)
+    //TODO: add functionality and connect to database
+    //TODO: allow drivers to delete rides that were created under their profile
+
     String[] availableArray = {"newRide1","newRide2","newRide3","newRide4",
             "newRide5"};
 
@@ -23,6 +27,7 @@ public class JoinRide extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
+        //currently using hardcoded array, need to replace with database retrievals
         ArrayAdapter uRidesAdapter = new ArrayAdapter<String>(this,
                 R.layout.activity_listview, availableArray);
 
