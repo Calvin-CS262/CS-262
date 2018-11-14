@@ -36,7 +36,6 @@
                 android:textColor="#ffff"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                tools:background="@color/colorAccent"
                 android:layout_weight = "1"/>
 
 
@@ -48,7 +47,6 @@
                 android:textColor="#ffff"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                tools:background="@color/colorAccent"
                 android:layout_weight = "2"/>
 
             <EditText
@@ -58,6 +56,8 @@
                 android:ems="10"
                 android:inputType="time"
                 android:text=""
+                android:textColor="#ffff"
+                android:textSize="20sp"
                 android:hint="@string/enter_time"/>
 
             <TextView
@@ -68,7 +68,6 @@
                 android:textColor="#ffff"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                tools:background="@color/colorAccent"
                 android:layout_weight = "3"/>
 
             <EditText
@@ -78,6 +77,8 @@
                 android:ems="10"
                 android:inputType="text"
                 android:text=""
+                android:textColor="#ffff"
+                android:textSize="20sp"
                 android:hint="@string/start_destination_text"/>
 
             <TextView
@@ -88,7 +89,6 @@
                 android:textColor="#ffff"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                tools:background="@color/colorAccent"
                 android:layout_weight = "4"/>
 
             <EditText
@@ -97,7 +97,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
-
+                android:textColor="#ffff"
+                android:textSize="20sp"
                 android:text=""
                 android:hint="@string/write_here_dest"/>
 
@@ -109,7 +110,6 @@
                 android:textColor="#ffff"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                tools:background="@color/colorAccent"
                 android:layout_weight = "5"/>
 
             <Spinner
