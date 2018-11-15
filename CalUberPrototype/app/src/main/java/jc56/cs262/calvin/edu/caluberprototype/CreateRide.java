@@ -24,13 +24,11 @@ import java.util.GregorianCalendar;
 
 public class CreateRide extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
-    //TODO: change time entry to widget selection as well
     //TODO: implement google maps api to choose locations.
     //this will help streamline the search parameters for
     //finding a ride
     //TODO: only allow users to click "create a ride" if all fields are filled in
-
-
+    String AmPm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,5 +159,28 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
                             getActivity(), year, month, day);
         }
 
+    }
+    //Pick time. Code is found at https://www.codingdemos.com/android-timepicker-edittext/
+    public void timePicker(View view ){
+        Calendar calendar;
+        int currentHour;
+        int currentMinute;
+        TimePickerDialog timePickerDialog;
+        final EditText chooseTime = findViewById(R.id.time);
+        calendar = Calendar.getInstance();
+        currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        currentMinute = calendar.get(Calendar.MINUTE);
+        timePickerDialog = new TimePickerDialog(CreateRide.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet (TimePicker timePicker,int hourOfDay, int minutes) {
+                if (hourOfDay >= 12 ){
+                    AmPm ="PM";
+                } else {
+                    AmPm ="AM";
+                }
+                chooseTime.setText(String.format("%02d:%02d", hourOfDay, minutes) + AmPm );
+            }
+        }, currentHour, currentMinute, false);
+        timePickerDialog.show();
     }
 }
