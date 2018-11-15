@@ -11,7 +11,7 @@
     <string name="CreateARidePage">Create A Ride</string>
     <string name="pick_date">Pick Date</string>
     <string name="create_a_ride">Create A Ride</string>
-    <string name="enter_time">Enter time you are available</string>
+    <string name="enter_time">Click here to enter time </string>
     <string name="start_destination_text">Write starting location here</string>
     <string name="write_here_dest">write destination here</string>
     <string name="enter_number">Enter number</string>

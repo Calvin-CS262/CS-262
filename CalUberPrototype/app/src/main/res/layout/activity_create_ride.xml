@@ -58,7 +58,8 @@
                 android:text=""
                 android:textColor="#ffff"
                 android:textSize="20sp"
-                android:hint="@string/enter_time"/>
+                android:hint="@string/enter_time"
+                android:onClick="timePicker"/>
 
             <TextView
                 android:id="@+id/startPointText"
