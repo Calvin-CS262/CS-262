@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/** MainActivity class
+ * This class sets up the Login Activity
+ * Allows access to the SignUp Activity freely, restricts access to the HomePage Activity
+ * Should be linked to the database to check the username and password when logging in
+ */
 public class MainActivity extends AppCompatActivity {
 
     //For presentation of logIn.
@@ -56,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-
+    //Starts the signUp Activity when button is pressed
     public void sign_up_page(View view) {
         Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
+    //Login check
     public void go_to_home(View view) {
         final EditText userNameText = findViewById(R.id.username);
         EditText passwordText = findViewById(R.id.password);
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         if (userName.equals(userNameText.getText().toString()) &&
                 password.equals(passwordText.getText().toString()) ) {
             Intent intent = new Intent(this, HomePage.class);
+            toastMsg("Logged In");
             startActivity(intent);
         }
         else

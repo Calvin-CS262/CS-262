@@ -22,6 +22,11 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/** CreateRide Class
+ * Sets up the Create Ride activity
+ * Lets users create a ride
+ * Should update the database when finished
+ */
 public class CreateRide extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
     //TODO: change time entry to widget selection as well

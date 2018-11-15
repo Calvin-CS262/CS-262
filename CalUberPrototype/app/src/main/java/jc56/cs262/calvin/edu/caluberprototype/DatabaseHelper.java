@@ -11,13 +11,15 @@ import android.widget.Toast;
 
 import java.security.KeyStore;
 
-
+/** DatabaseHelper Class
+ * DatabaseHelper contains SQL queries needed for other parts of the app
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "RidesManager.db";
     private static final String TABLE_USER = "User";
     private static final String KEY_ID = "UserId";
-    private static final String KEY_STUDENTID = "StudentId";
+    private static final String KEY_EMAILID = "EmailId";
     private static final String KEY_PASSWORD = "Password";
     private static final String KEY_LASTNAME = "LastName";
     private static final String KEY_FIRSTNAME = "FirstName";
@@ -31,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_USER + " ("
                 + KEY_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_STUDENTID + "TEXT, "
+                + KEY_EMAILID + "TEXT, "
                 + KEY_PASSWORD + "TEXT, "   //need to find a way to encrypt
                 + KEY_LASTNAME + "TEXT, "
                 + KEY_FIRSTNAME + "TEXT "
@@ -49,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_ID, user.getUserId());
-        values.put(KEY_STUDENTID, user.getStudentId());
+        values.put(KEY_EMAILID, user.getEmail());
         values.put(KEY_PASSWORD, user.getPassword());
         values.put(KEY_LASTNAME, user.getLastName());
         values.put(KEY_FIRSTNAME,user.getFirstName());

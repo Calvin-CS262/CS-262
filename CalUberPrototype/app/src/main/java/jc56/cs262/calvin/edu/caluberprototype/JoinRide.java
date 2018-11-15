@@ -11,14 +11,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+/** JoinRide class
+ * Displays upcoming rides in a list that users can choose to join
+ */
 public class JoinRide extends AppCompatActivity {
 
     //TODO: list all information of ride (date, time, start, destination)
     //TODO: add functionality and connect to database
     //TODO: allow drivers to delete rides that were created under their profile
 
-    String[] availableArray = {"newRide1","newRide2","newRide3","newRide4",
-            "newRide5"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class JoinRide extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         //currently using hardcoded array, need to replace with database retrievals
+        String[] availableArray = getArray();
         ArrayAdapter uRidesAdapter = new ArrayAdapter<String>(this,
                 R.layout.activity_listview, availableArray);
 
@@ -58,6 +60,13 @@ public class JoinRide extends AppCompatActivity {
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+    }
+
+    // Will get the array of upcoming rides from the database when set up, currently returns a hard coded array
+    public String[] getArray() {
+        String[] hardcodedArray = {"newRide1","newRide2","newRide3","newRide4",
+                "newRide5"};
+        return hardcodedArray;
     }
 
 }
