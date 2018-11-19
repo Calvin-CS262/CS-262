@@ -3,6 +3,10 @@ package jc56.cs262.calvin.edu.caluberprototype;
 import java.sql.Time;
 import java.util.Date;
 
+/** Rides Class
+ * Sets up class for the Rides Table
+ * A Ride includes a rideID, a driver (a User), departure time, destination, passenger limit, date, time and status
+ */
 public class Rides {
 
     int rideId; //Primary Key
@@ -25,7 +29,7 @@ public class Rides {
         this.passengerLimit = passengerLimit;
         this.date = date;
         this.time = time;
-        this.status = status;
+        this.status = status;   // Status determines if a ride is upcoming or has already passed based on the departure time
     }
 
     public int getRideId() { return rideId; }

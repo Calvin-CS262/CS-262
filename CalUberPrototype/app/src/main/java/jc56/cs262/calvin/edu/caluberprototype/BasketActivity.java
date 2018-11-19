@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+/** BasketActivity Class
+ * BasketActivity sets up the basket page, where users can see their upcoming rides and previous rides they've been on
+ */
 //NEED TO FIGURE OUT HOW TO MAKE LISTVIEW FILL ALL OF SCROLLVIEW
 
 public class BasketActivity extends AppCompatActivity {

@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/** HomePage Class
+ * Sets up the home page activity
+ * The home page connects to all other activities except the sign up activity
+ */
 public class HomePage extends AppCompatActivity {
     //home page after login.
 
