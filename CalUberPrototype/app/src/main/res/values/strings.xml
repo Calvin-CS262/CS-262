@@ -25,6 +25,10 @@
     <string name="calvin_id">Calvin id</string>
     <string name="create_prompt">Create a username and password</string>
     <string name="datePicker">datePicker</string>
+    <string name="CreateRideMessage">Your ride is created!</string>
+    <string name="CreateARideFailedMsg">Please fill out all fields</string>
+    <string name="PM">PM</string>
+    <string name="AM">AM</string>
     <string-array name = "numbers">
         <item>1</item>
         <item>2</item>
