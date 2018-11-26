@@ -32,7 +32,6 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
     //TODO: implement google maps api to choose locations.
     //this will help streamline the search parameters for
     //finding a ride
-    //TODO: only allow users to click "create a ride" if all fields are filled in
     String AmPm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +103,6 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
     //calling toast message after driver clicks "create a ride" button
     //set all entry fields back to empty
     public void submitRideMsg(View view) {
-        toastMsg("Your ride is created! ");
 
         Spinner spinner = findViewById(R.id.number);
 
@@ -112,14 +110,19 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
         EditText TimeText = findViewById(R.id.time);
         EditText StartText = findViewById(R.id.startPoint);
         EditText EndText = findViewById(R.id.destination);
-
-        //set everything back to default
-        dateText.setText("");
-        TimeText.setText("");
-        StartText.setText("");
-        EndText.setText("");
-        spinner.setSelection(0);
-
+        //create write only if all fields are field
+        if (dateText.getText().length() > 0 && TimeText.getText().length() > 0 && StartText.getText().length() > 0 &&
+                EndText.getText().length()> 0) {
+            toastMsg(getString(R.string.CreateRideMessage));
+            //set everything back to default
+            dateText.setText("");
+            TimeText.setText("");
+            StartText.setText("");
+            EndText.setText("");
+            spinner.setSelection(0);
+        } else { // else toast a message to fill out the form
+            toastMsg(getString(R.string.CreateARideFailedMsg));
+        }
     }
 
     //spinner for selecting date of departure
@@ -179,9 +182,9 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
             @Override
             public void onTimeSet (TimePicker timePicker,int hourOfDay, int minutes) {
                 if (hourOfDay >= 12 ){
-                    AmPm ="PM";
+                    AmPm =getString(R.string.PM);
                 } else {
-                    AmPm ="AM";
+                    AmPm =getString(R.string.AM);
                 }
                 chooseTime.setText(String.format("%02d:%02d", hourOfDay, minutes) + AmPm );
             }
