@@ -237,13 +237,13 @@ public class PersonNetworkUtils {
      * @param queryString
      * @return queries Person table according to the argument passed by queryString
      */
-    static String getPersonInfo(String queryString) {
+    static String getPersonIdInfo(String queryString) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         String personListJSONString = null;
         try {
-            Uri builtURI = Uri.parse(PERSON_LIST_URL).buildUpon().build();
+            Uri builtURI = Uri.parse(PERSON_ID_URL).buildUpon().build();
             //ConvertURI to URL
             URL requestURL = new URL(builtURI.toString());
             // Open connection and make request.

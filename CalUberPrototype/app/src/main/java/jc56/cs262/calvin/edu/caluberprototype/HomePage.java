@@ -11,6 +11,11 @@ import android.widget.Button;
  * The home page connects to all other activities except the sign up activity
  */
 public class HomePage extends AppCompatActivity {
+    private static final String LOG_TAG = HomePage.class.getSimpleName();
+    private Person person;
+
+    //TODO: connect to database
+
     //home page after login.
 
     @Override
