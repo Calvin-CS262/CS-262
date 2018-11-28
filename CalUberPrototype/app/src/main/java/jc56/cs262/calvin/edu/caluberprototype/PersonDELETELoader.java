@@ -1,6 +1,5 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
-import android.app.Person;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
