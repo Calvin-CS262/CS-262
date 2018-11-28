@@ -92,13 +92,13 @@ public class RideNetworkUtils {
      * @param departureDateTime
      * @return String indicating status of PUT
      */
-    static String putPersonInfo(String personId, String email, String password,
-                                String lastName, String firstName) {
+    static String putRideInfo(String rideId, String driverId, String departure,
+                              String destination, String passengerLimit, String departureDateTime) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         try {
-            Uri buildURI = Uri.parse(PERSON_PUT_URL).buildUpon().build();
+            Uri buildURI = Uri.parse(RIDE_PUT_URL).buildUpon().build();
             //Convert URI to URL
             URL requestURL = new URL(buildURI.toString());
             //Define connection and request
@@ -107,17 +107,18 @@ public class RideNetworkUtils {
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             //Define the data to send
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("personId", personId);
-            jsonObject.accumulate("email",email);
-            jsonObject.accumulate("password", password);
-            jsonObject.accumulate("lastName", lastName);
-            jsonObject.accumulate("firstName", firstName);
+            jsonObject.accumulate("rideId", rideId);
+            jsonObject.accumulate("driverId", driverId);
+            jsonObject.accumulate("departure", departure);
+            jsonObject.accumulate("destination", destination);
+            jsonObject.accumulate("passengerLimit", passengerLimit);
+            jsonObject.accumulate("departureDateTime", departureDateTime);
             //Make data output stream
             OutputStream outputStream = urlConnection.getOutputStream();
             //Create writer and make write
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
             writer.write(jsonObject.toString());
-            Log.e(PersonNetworkUtils.class.toString(), jsonObject.toString());
+            Log.e(RideNetworkUtils.class.toString(), jsonObject.toString());
             //Close
             writer.flush();
             writer.close();
@@ -137,17 +138,17 @@ public class RideNetworkUtils {
     }
 
     /**
-     * Method deletes data entry from Person table by personId
+     * Method deletes data entry from Ride table by rideId
      *
-     * @param personId
-     * @return deletes the person from Person table
+     * @param rideId
+     * @return deletes the ride from Ride table
      */
-    public static String deletePersonInfo(String personId) {
+    public static String deleteRideInfo(String rideId) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         try {
-            Uri builtURI = Uri.parse(PERSON_DELETE_URL).buildUpon().appendPath(personId).build();
+            Uri builtURI = Uri.parse(RIDE_DELETE_URL).buildUpon().appendPath(rideId).build();
             //Convert URI to URL
             URL requestURL = new URL(builtURI.toString());
             //Open connection and make request
@@ -183,15 +184,15 @@ public class RideNetworkUtils {
      * Method queries specified URI
      *
      * @param queryString
-     * @return queries Person table for all its data
+     * @return queries Ride table for all its data
      */
-    static String getPersonListInfo(String queryString) {
+    static String getRideListInfo(String queryString) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
-        String personListJSONString = null;
+        String rideListJSONString = null;
         try{
-            Uri builtURI = Uri.parse(PERSON_LIST_URL).buildUpon().build();
+            Uri builtURI = Uri.parse(RIDE_LIST_URL).buildUpon().build();
             //ConvertURI to URL
             URL requestURL = new URL(builtURI.toString());
             // Open connection and make request.
@@ -213,7 +214,7 @@ public class RideNetworkUtils {
             if(buffer.length() == 0) {
                 return null;
             }
-            personListJSONString = buffer.toString();
+            rideListJSONString = buffer.toString();
         } catch (Exception e) {
             e.printStackTrace();
             return "Connection failed";
@@ -225,9 +226,9 @@ public class RideNetworkUtils {
                     e.printStackTrace();
                 }
             }
-            if(personListJSONString != null) {
-                Log.e(LOG_TAG, personListJSONString);
-                return personListJSONString;
+            if(rideListJSONString != null) {
+                Log.e(LOG_TAG, rideListJSONString);
+                return rideListJSONString;
             } else {
                 return "";
             }
@@ -238,15 +239,15 @@ public class RideNetworkUtils {
      * Method queries specified URI
      *
      * @param queryString
-     * @return queries Person table according to the argument passed by queryString
+     * @return queries Ride table according to the argument passed by queryString
      */
-    static String getPersonIdInfo(String queryString) {
+    static String getRideIdInfo(String queryString) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
-        String personListJSONString = null;
+        String rideListJSONString = null;
         try {
-            Uri builtURI = Uri.parse(PERSON_ID_URL).buildUpon().build();
+            Uri builtURI = Uri.parse(RIDE_ID_URL).buildUpon().build();
             //ConvertURI to URL
             URL requestURL = new URL(builtURI.toString());
             // Open connection and make request.
@@ -267,7 +268,7 @@ public class RideNetworkUtils {
             if (buffer.length() == 0) {
                 return null;
             }
-            personListJSONString = buffer.toString();
+            rideListJSONString = buffer.toString();
         } catch (Exception e) {
             e.printStackTrace();
             return "Connection failed";
@@ -282,9 +283,9 @@ public class RideNetworkUtils {
                     e.printStackTrace();
                 }
             }
-            if (personListJSONString != null) {
-                Log.e(LOG_TAG, personListJSONString);
-                return personListJSONString;
+            if (rideListJSONString != null) {
+                Log.e(LOG_TAG, rideListJSONString);
+                return rideListJSONString;
             } else {
                 return "";
             }
