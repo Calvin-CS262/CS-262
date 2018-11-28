@@ -51,17 +51,18 @@ public class RideNetworkUtils {
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             //Define the data to send
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("personId", personId);
-            jsonObject.accumulate("email",email);
-            jsonObject.accumulate("password", password);
-            jsonObject.accumulate("lastName", lastName);
-            jsonObject.accumulate("firstName", firstName);
+            jsonObject.accumulate("rideId", rideId);
+            jsonObject.accumulate("driverId", driverId);
+            jsonObject.accumulate("departure", departure);
+            jsonObject.accumulate("destination", destination);
+            jsonObject.accumulate("passengerLimit", passengerLimit);
+            jsonObject.accumulate("departureDateTime", departureDateTime);
             //Make data output stream
             OutputStream outputStream = urlConnection.getOutputStream();
             //Create writer and make write
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
             writer.write(jsonObject.toString());
-            Log.e(PersonNetworkUtils.class.toString(), jsonObject.toString());
+            Log.e(RideNetworkUtils.class.toString(), jsonObject.toString());
             //Close
             writer.flush();
             writer.close();
@@ -83,11 +84,12 @@ public class RideNetworkUtils {
     /**
      * Method PUTs to specified URI
      *
-     * @param personId
-     * @param email
-     * @param password
-     * @param lastName
-     * @param firstName
+     * @param rideId
+     * @param driverId
+     * @param departure
+     * @param destination
+     * @param passengerLimit
+     * @param departureDateTime
      * @return String indicating status of PUT
      */
     static String putPersonInfo(String personId, String email, String password,
