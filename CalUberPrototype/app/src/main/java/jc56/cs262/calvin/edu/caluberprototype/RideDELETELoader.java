@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class PersonDELETELoader extends AsyncTaskLoader<String> {
+public class RideDELETELoader extends AsyncTaskLoader<String> {
 
-    private static final String LOG_TAG = PersonDELETELoader.class.getSimpleName();
-    private String personId;
+    private static final String LOG_TAG = RideDELETELoader.class.getSimpleName();
+    private String rideId;
 
     @Override
     protected void onStartLoading() {
@@ -17,9 +17,9 @@ public class PersonDELETELoader extends AsyncTaskLoader<String> {
         forceLoad();
     }
 
-    public PersonDELETELoader(@NonNull Context context, String personId) {
+    public RideDELETELoader(@NonNull Context context, String rideId) {
         super(context);
-        this.personId = personId;
+        this.rideId = rideId;
     }
 
     /**
@@ -30,7 +30,7 @@ public class PersonDELETELoader extends AsyncTaskLoader<String> {
     @Nullable
     @Override
     public String loadInBackground() {
-        Log.e(LOG_TAG, "deletePersonInfo called");
-        return PersonNetworkUtils.deletePersonInfo(personId);
+        Log.e(LOG_TAG, "deleteRideInfo called");
+        return RideNetworkUtils.deleteRideInfo(rideId);
     }
 }
