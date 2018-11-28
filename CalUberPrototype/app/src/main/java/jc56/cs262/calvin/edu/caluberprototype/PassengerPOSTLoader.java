@@ -8,15 +8,12 @@ import android.util.Log;
 
 import java.time.Instant;
 
-public class RidePOSTLoader extends AsyncTaskLoader<String> {
+public class PassengerPOSTLoader extends AsyncTaskLoader<String> {
 
-    private static final String LOG_TAG = RidePOSTLoader.class.getSimpleName();
+    private static final String LOG_TAG = PassengerPOSTLoader.class.getSimpleName();
+    private  String id;
     private String rideId;
-    private String driverId;
-    private String departure;
-    private String destination;
-    private String passengerLimit;
-    private String departureDateTime;
+    private String personId;
 
     /**
      * Method called when starting the loader
@@ -29,15 +26,11 @@ public class RidePOSTLoader extends AsyncTaskLoader<String> {
 
 
 
-    public RidePOSTLoader(@NonNull Context context, String rideId, String driverId, String departure,
-                          String destination, String passengerLimit, String departureDateTime) {
+    public PassengerPOSTLoader(@NonNull Context context, String id, String rideId, String personId) {
         super(context);
+        this.id = id;
         this.rideId = rideId;
-        this.driverId = driverId;
-        this.departure = departure;
-        this.destination = destination;
-        this.passengerLimit = passengerLimit;
-        this.departureDateTime = departureDateTime;
+        this.personId = personId;
     }
 
     /**
@@ -48,7 +41,7 @@ public class RidePOSTLoader extends AsyncTaskLoader<String> {
     @Nullable
     @Override
     public String loadInBackground() {
-        Log.e(LOG_TAG, "postRideInfo called");
-        return RideNetworkUtils.postRideInfo(rideId, driverId, departure, destination, passengerLimit, departureDateTime);
+        Log.e(LOG_TAG, "postPassengerInfo called");
+        return PassengerNetworkUtils.postPassengerInfo(id, rideId, personId);
     }
 }

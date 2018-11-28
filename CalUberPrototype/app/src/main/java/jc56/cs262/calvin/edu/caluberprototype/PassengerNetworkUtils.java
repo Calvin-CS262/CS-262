@@ -16,33 +16,29 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Objects;
 
-public class RideNetworkUtils {
-    private static final String LOG_TAG = RideNetworkUtils.class.getSimpleName();
-    private static final String RIDE_LIST_URL = "https://caluber-221319.appspot.com/caluber/v1/rides";
-    private static final String RIDE_ID_URL = "https://caluber-221319.appspot.com/caluber/v1/ride/";
-    private static final String RIDE_POST_URL = "https://caluber-221319.appspot.com/caluber/v1/rides";
-    private static final String RIDE_DELETE_URL = "https://caluber-221319.appspot.com/caluber/v1/ride/";
-    private static final String RIDE_PUT_URL = "https://caluber-221319.appspot.com/caluber/v1/ride/";
+public class PassengerNetworkUtils {
+    private static final String LOG_TAG = PassengerNetworkUtils.class.getSimpleName();
+    private static final String PASSENGER_LIST_URL = "https://caluber-221319.appspot.com/caluber/v1/passengers";
+    private static final String PASSENGER_ID_URL = "https://caluber-221319.appspot.com/caluber/v1/passenger/";
+    private static final String PASSENGER_POST_URL = "https://caluber-221319.appspot.com/caluber/v1/passengers";
+    private static final String PASSENGER_DELETE_URL = "https://caluber-221319.appspot.com/caluber/v1/passenger/";
+//    private static final String PASSENGER_PUT_URL = "https://caluber-221319.appspot.com/caluber/v1/ride/";
 
 
     /**
      * Method POSTs to specified URI
      *
+     * @param id
      * @param rideId
-     * @param driverId
-     * @param departure
-     * @param destination
-     * @param passengerLimit
-     * @param departureDateTime
+     * @param personId
      * @return String indicating status of POST
      */
-    static String postRideInfo(String rideId, String driverId, String departure,
-                                 String destination, String passengerLimit, String departureDateTime) {
+    static String postPassengerInfo(String id, String rideId, String personId) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         try {
-            Uri buildURI = Uri.parse(RIDE_POST_URL).buildUpon().build();
+            Uri buildURI = Uri.parse(PASSENGER_POST_URL).buildUpon().build();
             //Convert URI to URL
             URL requestURL = new URL(buildURI.toString());
             //Define connection and request
@@ -51,18 +47,15 @@ public class RideNetworkUtils {
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             //Define the data to send
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("id", id);
             jsonObject.accumulate("rideId", rideId);
-            jsonObject.accumulate("driverId", driverId);
-            jsonObject.accumulate("departure", departure);
-            jsonObject.accumulate("destination", destination);
-            jsonObject.accumulate("passengerLimit", passengerLimit);
-            jsonObject.accumulate("departureDateTime", departureDateTime);
+            jsonObject.accumulate("personId", personId);
             //Make data output stream
             OutputStream outputStream = urlConnection.getOutputStream();
             //Create writer and make write
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
             writer.write(jsonObject.toString());
-            Log.e(RideNetworkUtils.class.toString(), jsonObject.toString());
+            Log.e(PassengerNetworkUtils.class.toString(), jsonObject.toString());
             //Close
             writer.flush();
             writer.close();
@@ -81,74 +74,71 @@ public class RideNetworkUtils {
         }
     }
 
+//    /**
+//     * Method PUTs to specified URI
+//     * Put not needed for Passenger Class
+//     *
+//     * @param id
+//     * @param rideId
+//     * @param personId
+//     * @return String indicating status of PUT
+//     */
+//    static String putPassengerInfo(String id, String rideId, String personId) {
+//        HttpURLConnection urlConnection = null;
+//        BufferedReader reader = null;
+//
+//        try {
+//            Uri buildURI = Uri.parse(PASSENGER_PUT_URL).buildUpon().build();
+//            //Convert URI to URL
+//            URL requestURL = new URL(buildURI.toString());
+//            //Define connection and request
+//            urlConnection = (HttpURLConnection) requestURL.openConnection();
+//            urlConnection.setRequestMethod("PUT");
+//            urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+//            //Define the data to send
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.accumulate("rideId", rideId);
+//            jsonObject.accumulate("driverId", driverId);
+//            jsonObject.accumulate("departure", departure);
+//            jsonObject.accumulate("destination", destination);
+//            jsonObject.accumulate("passengerLimit", passengerLimit);
+//            jsonObject.accumulate("departureDateTime", departureDateTime);
+//            //Make data output stream
+//            OutputStream outputStream = urlConnection.getOutputStream();
+//            //Create writer and make write
+//            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+//            writer.write(jsonObject.toString());
+//            Log.e(PassengerNetworkUtils.class.toString(), jsonObject.toString());
+//            //Close
+//            writer.flush();
+//            writer.close();
+//            outputStream.close();
+//            urlConnection.connect();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "PUT failed";
+//        } finally {
+//            try {
+//                return Objects.requireNonNull(urlConnection).getResponseMessage() + "";
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return "PUT failed";
+//            }
+//        }
+//    }
+
     /**
-     * Method PUTs to specified URI
+     * Method deletes data entry from Passenger table by id
      *
-     * @param rideId
-     * @param driverId
-     * @param departure
-     * @param destination
-     * @param passengerLimit
-     * @param departureDateTime
-     * @return String indicating status of PUT
+     * @param id
+     * @return deletes the passenger from Passenger table
      */
-    static String putRideInfo(String rideId, String driverId, String departure,
-                              String destination, String passengerLimit, String departureDateTime) {
+    public static String deletePassengerInfo(String id) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
         try {
-            Uri buildURI = Uri.parse(RIDE_PUT_URL).buildUpon().build();
-            //Convert URI to URL
-            URL requestURL = new URL(buildURI.toString());
-            //Define connection and request
-            urlConnection = (HttpURLConnection) requestURL.openConnection();
-            urlConnection.setRequestMethod("PUT");
-            urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
-            //Define the data to send
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("rideId", rideId);
-            jsonObject.accumulate("driverId", driverId);
-            jsonObject.accumulate("departure", departure);
-            jsonObject.accumulate("destination", destination);
-            jsonObject.accumulate("passengerLimit", passengerLimit);
-            jsonObject.accumulate("departureDateTime", departureDateTime);
-            //Make data output stream
-            OutputStream outputStream = urlConnection.getOutputStream();
-            //Create writer and make write
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-            writer.write(jsonObject.toString());
-            Log.e(RideNetworkUtils.class.toString(), jsonObject.toString());
-            //Close
-            writer.flush();
-            writer.close();
-            outputStream.close();
-            urlConnection.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "PUT failed";
-        } finally {
-            try {
-                return Objects.requireNonNull(urlConnection).getResponseMessage() + "";
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "PUT failed";
-            }
-        }
-    }
-
-    /**
-     * Method deletes data entry from Ride table by rideId
-     *
-     * @param rideId
-     * @return deletes the ride from Ride table
-     */
-    public static String deleteRideInfo(String rideId) {
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-
-        try {
-            Uri builtURI = Uri.parse(RIDE_DELETE_URL).buildUpon().appendPath(rideId).build();
+            Uri builtURI = Uri.parse(PASSENGER_DELETE_URL).buildUpon().appendPath(id).build();
             //Convert URI to URL
             URL requestURL = new URL(builtURI.toString());
             //Open connection and make request
@@ -184,15 +174,15 @@ public class RideNetworkUtils {
      * Method queries specified URI
      *
      * @param queryString
-     * @return queries Ride table for all its data
+     * @return queries Passenger table for all its data
      */
-    static String getRideListInfo(String queryString) {
+    static String getPassengerListInfo(String queryString) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
-        String rideListJSONString = null;
+        String passengerListJSONString = null;
         try{
-            Uri builtURI = Uri.parse(RIDE_LIST_URL).buildUpon().build();
+            Uri builtURI = Uri.parse(PASSENGER_LIST_URL).buildUpon().build();
             //ConvertURI to URL
             URL requestURL = new URL(builtURI.toString());
             // Open connection and make request.
@@ -214,7 +204,7 @@ public class RideNetworkUtils {
             if(buffer.length() == 0) {
                 return null;
             }
-            rideListJSONString = buffer.toString();
+            passengerListJSONString = buffer.toString();
         } catch (Exception e) {
             e.printStackTrace();
             return "Connection failed";
@@ -226,9 +216,9 @@ public class RideNetworkUtils {
                     e.printStackTrace();
                 }
             }
-            if(rideListJSONString != null) {
-                Log.e(LOG_TAG, rideListJSONString);
-                return rideListJSONString;
+            if(passengerListJSONString != null) {
+                Log.e(LOG_TAG, passengerListJSONString);
+                return passengerListJSONString;
             } else {
                 return "";
             }
@@ -239,15 +229,15 @@ public class RideNetworkUtils {
      * Method queries specified URI
      *
      * @param queryString
-     * @return queries Ride table according to the argument passed by queryString
+     * @return queries Passenger table according to the argument passed by queryString
      */
-    static String getRideIdInfo(String queryString) {
+    static String getPassengerIdInfo(String queryString) {
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
 
-        String rideListJSONString = null;
+        String passengerListJSONString = null;
         try {
-            Uri builtURI = Uri.parse(RIDE_ID_URL).buildUpon().build();
+            Uri builtURI = Uri.parse(PASSENGER_ID_URL).buildUpon().build();
             //ConvertURI to URL
             URL requestURL = new URL(builtURI.toString());
             // Open connection and make request.
@@ -268,7 +258,7 @@ public class RideNetworkUtils {
             if (buffer.length() == 0) {
                 return null;
             }
-            rideListJSONString = buffer.toString();
+            passengerListJSONString = buffer.toString();
         } catch (Exception e) {
             e.printStackTrace();
             return "Connection failed";
@@ -283,9 +273,9 @@ public class RideNetworkUtils {
                     e.printStackTrace();
                 }
             }
-            if (rideListJSONString != null) {
-                Log.e(LOG_TAG, rideListJSONString);
-                return rideListJSONString;
+            if (passengerListJSONString != null) {
+                Log.e(LOG_TAG, passengerListJSONString);
+                return passengerListJSONString;
             } else {
                 return "";
             }
