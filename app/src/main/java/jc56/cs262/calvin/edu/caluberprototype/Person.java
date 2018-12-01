@@ -16,7 +16,13 @@ public class Person {
         this.password = password;
         this.lastName = lastName;
         this.firstName = firstName;
-        this.email = emailId + "@students.calvin.edu";
+        //This makes sure that if the incoming email ends with @students.calvin.edu, it doesn't get added again
+        String[] atEmail = emailId.split("@");
+        if (atEmail.length > 1) {
+            this.email = emailId;
+        } else {
+            this.email = emailId + "@students.calvin.edu";
+        }
     }
 
 
