@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordText;
     private Button loginButton;
     private List<Person> personList = new ArrayList<>();
-    private ListView itemsListView;
     private NumberFormat numberFormat = NumberFormat.getInstance();
 
     private static String TAG = "MainActivity";
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         userNameText = findViewById(R.id.username);
         passwordText = findViewById(R.id.password);
-        itemsListView = (ListView) findViewById(R.id.personListView);
+        loginButton = findViewById(R.id.login);
 
 
         //call hideKeyboard method when clicking outside of userNameText
@@ -110,18 +109,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Login check
-    public void go_to_home(View view) {
-        final EditText userNameText = findViewById(R.id.username);
-        EditText passwordText = findViewById(R.id.password);
-
-        if (userName.equals(userNameText.getText().toString()) &&
-                password.equals(passwordText.getText().toString()) ) {
+    public void go_to_home() {
             Intent intent = new Intent(this, HomePage.class);
             toastMsg("Logged In");
             startActivity(intent);
-        }
-        else
-            toastMsg("Incorrect Username and Password");
     }
 
 
@@ -231,32 +222,25 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, personList.toString());
     }
 
-
-    /**
-     * Refresh the weather data on the forecast ListView through a simple adapter
-     */
     private void updateDisplay() {
         if (personList == null) {
             Toast.makeText(MainActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
         }
-        ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+//        Toast.makeText(MainActivity.this, getString(personList.size()), Toast.LENGTH_SHORT).show();
         for (Person item : personList) {
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("personId", numberFormat.format(item.getPersonId()));
-            map.put("email", item.getEmail());
-            map.put("password", item.getPassword());
-            map.put("lastName", item.getLastName());
-            map.put("firstName", item.getFirstName());
-            data.add(map);
+            if ((item.getEmail() == userNameText.getText().toString() ||
+                    item.getEmail() == userNameText.getText().toString() + "@students.calvin.edu")
+                    && item.getPassword() == passwordText.getText().toString()) {
+                Global.personId = item.getPersonId();
+            }
+            toastMsg(userNameText.getText().toString());
+            toastMsg(passwordText.getText().toString());
         }
-        int resource = R.layout.player_item;    //TODO: Not sure what R.Layout.player_item should look like
-        String[] from = {"personId", "email", "password", "lastName", "firstName"};
-        int[] to = {R.id.personIdTextView, R.id.emailTextView, R.id.passwordTextView,
-                R.id.lastNameTextView, R.id.firstNameTextView};
-
-        SimpleAdapter adapter = new SimpleAdapter(this, data, resource, from, to);
-        itemsListView.setAdapter(adapter);
+        if (Global.personId == -1) {
+            toastMsg("Incorrect username and/or password");
+        } else {
+            go_to_home();
+        }
     }
-
 
 }
