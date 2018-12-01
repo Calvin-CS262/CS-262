@@ -234,7 +234,8 @@ public class MainActivity extends AppCompatActivity {
                     && item.getPassword() == passwordText.getText().toString()) {
                 sharedData.setValue(item.getPersonId());
             }
-        if (sharedData.getValue() == -1) {
+        }
+        if (sharedData.getValue() == 0) {
             toastMsg("Incorrect username and/or password");
         } else {
             go_to_home();
