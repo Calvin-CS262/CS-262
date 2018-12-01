@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Button loginButton;
     private List<Person> personList = new ArrayList<>();
     private NumberFormat numberFormat = NumberFormat.getInstance();
+    private Globals sharedData = Globals.getInstance();
 
     private static String TAG = "MainActivity";
 
@@ -231,12 +232,9 @@ public class MainActivity extends AppCompatActivity {
             if ((item.getEmail() == userNameText.getText().toString() ||
                     item.getEmail() == userNameText.getText().toString() + "@students.calvin.edu")
                     && item.getPassword() == passwordText.getText().toString()) {
-                Global.personId = item.getPersonId();
+                sharedData.setValue(item.getPersonId());
             }
-            toastMsg(userNameText.getText().toString());
-            toastMsg(passwordText.getText().toString());
-        }
-        if (Global.personId == -1) {
+        if (sharedData.getValue() == -1) {
             toastMsg("Incorrect username and/or password");
         } else {
             go_to_home();
