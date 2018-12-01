@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="personListView" type="id">stuffGoesHere?</item>
+    <item name="personIdTextView" type="id">don'tKnowWhatGoesHere</item>
+    <item name="emailTextView" type="id">hereEither</item>
+    <item name="passwordTextView" type="id">noClue</item>
+    <item name="lastNameTextView" type="id">justAddingSoIDon'tSeeRed</item>
+    <item name="firstNameTextView" type="id">ohGodSoMuchRed</item>
+</resources>

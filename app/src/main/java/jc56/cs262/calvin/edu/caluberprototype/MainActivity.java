@@ -28,6 +28,8 @@ import java.text.NumberFormat;    //Added for connectivity
 import java.util.ArrayList;    //Added for connectivity
 import java.util.HashMap;    //Added for connectivity
 import java.util.List;    //Added for connectivity
+import android.widget.SimpleAdapter;    //Added for connectivity
+import android.widget.ListView;    //Added for connectivity
 
 /** MainActivity class
  * This class sets up the Login Activity
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordText;
     private Button loginButton;
     private List<Person> personList = new ArrayList<>();
+    private ListView itemsListView;
+    private NumberFormat numberFormat = NumberFormat.getInstance();
+
+    private static String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         userNameText = findViewById(R.id.username);
         passwordText = findViewById(R.id.password);
+        itemsListView = (ListView) findViewById(R.id.personListView);
 
 
         //call hideKeyboard method when clicking outside of userNameText
@@ -71,6 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 if (!hasFocus) {
                     hideKeyboard(v);
                 }
+            }
+        });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new GetPlayerTask().execute(createURL(""));
             }
         });
 
@@ -152,19 +166,96 @@ public class MainActivity extends AppCompatActivity {
             return result;
         }
 
+
         @Override
-        protected void onPostExecute(JSONArray players) {
-            playerList.clear();
-            if (players == null) {
+        protected void onPostExecute(JSONArray persons) {
+            personList.clear();
+            if (persons == null) {
                 Toast.makeText(MainActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-            } else if (players.length() == 0) {
+            } else if (persons.length() == 0) {
                 Toast.makeText(MainActivity.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
             } else {
-                convertJSONtoArrayList(players);
+                convertJSONtoArrayList(persons);
             }
             MainActivity.this.updateDisplay();
         }
 
+    }
+
+
+
+    /**
+     * Formats a URL for the webservice specified in the string resources.
+     *
+     * @param id string version of the desired ID (or BLANK for all players)
+     * @return URL formatted for the course monopoly server
+     */
+    private URL createURL(String id) {
+        try {
+            String urlString = getString(R.string.web_service_url);
+            if (id.equals("")) {
+                urlString += "/persons";
+            } else {
+                urlString += "/person/" + id;
+            }
+            return new URL(urlString);
+        } catch (Exception e) {
+            Toast.makeText(this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Converts the JSON player data to an arraylist suitable for a listview adapter
+     *
+     * @param players JSON array of player objects
+     */
+    private void convertJSONtoArrayList(JSONArray players) {
+        Log.d(TAG, players.toString());
+        try {
+            for (int i = 0; i < players.length(); i++) {
+                JSONObject player = players.getJSONObject(i);
+                personList.add(new Person(
+                        player.getInt("personId"),
+                        player.optString("email", "no email"),
+                        player.optString("password", "no password"),
+                        player.optString("lastName", "no last name"),
+                        player.optString("firstName", "no first name")
+                ));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, personList.toString());
+    }
+
+
+    /**
+     * Refresh the weather data on the forecast ListView through a simple adapter
+     */
+    private void updateDisplay() {
+        if (personList == null) {
+            Toast.makeText(MainActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+        }
+        ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+        for (Person item : personList) {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("personId", numberFormat.format(item.getPersonId()));
+            map.put("email", item.getEmail());
+            map.put("password", item.getPassword());
+            map.put("lastName", item.getLastName());
+            map.put("firstName", item.getFirstName());
+            data.add(map);
+        }
+        int resource = R.layout.player_item;    //TODO: Not sure what R.Layout.player_item should look like
+        String[] from = {"personId", "email", "password", "lastName", "firstName"};
+        int[] to = {R.id.personIdTextView, R.id.emailTextView, R.id.passwordTextView,
+                R.id.lastNameTextView, R.id.firstNameTextView};
+
+        SimpleAdapter adapter = new SimpleAdapter(this, data, resource, from, to);
+        itemsListView.setAdapter(adapter);
     }
 
 
