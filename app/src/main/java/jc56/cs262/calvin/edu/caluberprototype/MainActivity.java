@@ -229,11 +229,12 @@ public class MainActivity extends AppCompatActivity {
         }
 //        Toast.makeText(MainActivity.this, getString(personList.size()), Toast.LENGTH_SHORT).show();
         for (Person item : personList) {
-            if ((item.getEmail() == userNameText.getText().toString() ||
-                    item.getEmail() == userNameText.getText().toString() + "@students.calvin.edu")
-                    && item.getPassword() == passwordText.getText().toString()) {
+            if ((item.getEmail().equals(userNameText.getText().toString()) ||
+                    item.getEmail().equals(userNameText.getText().toString() + "@students.calvin.edu"))
+                    && item.getPassword().equals(passwordText.getText().toString())) {
                 sharedData.setValue(item.getPersonId());
             }
+
         }
         if (sharedData.getValue() == 0) {
             toastMsg("Incorrect username and/or password");
