@@ -32,6 +32,7 @@ public class Signup extends AppCompatActivity {
     private EditText calvinUsername;
     private EditText password;
     private Button signup;
+    private String firstNameText, lastNameText, passwordText, calvinUsernameText;
 
 
     @Override
@@ -40,13 +41,9 @@ public class Signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         firstName = findViewById(R.id.first_name);
-        firstName.equals(firstName.getText().toString());
         lastName = findViewById(R.id.last_name);
-        lastName.equals(lastName.getText().toString());
         calvinUsername = findViewById(R.id.calvin_id);
-        calvinUsername.equals(calvinUsername.getText().toString());
         password = findViewById(R.id.password);
-        password.equals(password.getText().toString());
         signup = findViewById(R.id.signup_button);
 
         //call hideKeyboard method
@@ -86,6 +83,10 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new PostUserTask().execute(createURL(""));
+                firstNameText = firstName.getText().toString();
+                lastNameText = lastName.getText().toString();
+                calvinUsernameText = calvinUsername.getText().toString();
+                passwordText = password.getText().toString();
             }
         });
     }
@@ -100,10 +101,10 @@ public class Signup extends AppCompatActivity {
             try {
                 // Hard-code a new person using JSON.
                 JSONObject jsonData = new JSONObject();
-                jsonData.put("email", calvinUsername);
-                jsonData.put("password", password);
-                jsonData.put("lastName", lastName);
-                jsonData.put("firstName", firstName);
+                jsonData.put("email", calvinUsernameText);
+                jsonData.put("password", passwordText);
+                jsonData.put("lastName", lastNameText);
+                jsonData.put("firstName", firstNameText);
                 // Open the connection as usual.
                 connection = (HttpURLConnection) params[0].openConnection();
                 // Configure the connection for a POST, including outputing streamed JSON data.
@@ -146,15 +147,7 @@ public class Signup extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray players) {
-            personList.clear();
-            if (players == null) {
-                Toast.makeText(MainActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-            } else if (players.length() == 0) {
-                Toast.makeText(MainActivity.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
-            } else {
-                convertJSONtoArrayList(players);
-            }
-            MainActivity.this.updateDisplay();
+            return_to_login();
         }
 
     }
@@ -163,9 +156,9 @@ public class Signup extends AppCompatActivity {
         try {
             String urlString = getString(R.string.web_service_url);
             if (id.equals("")) {
-                urlString += "/persons";
+                urlString += "/person";
             } else {
-                urlString += "/person/" + id;
+                throw new Exception();
             }
             return new URL(urlString);
         } catch (Exception e) {
