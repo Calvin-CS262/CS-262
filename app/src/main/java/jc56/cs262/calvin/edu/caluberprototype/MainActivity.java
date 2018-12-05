@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText userNameText;
     private EditText passwordText;
     private Button loginButton;
-    public List<Person> personList = new ArrayList<>();
+    private List<Person> personList = new ArrayList<>();
     private NumberFormat numberFormat = NumberFormat.getInstance();
     private Globals sharedData = Globals.getInstance();
 
