@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //when someone clicks the "login" button, GetPlayerTask is called.
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    //Login check
+    //Change activity view to Home page
     public void go_to_home() {
             Intent intent = new Intent(this, HomePage.class);
             toastMsg("Logged In");
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //To get the list of players from the database
+    //on post execute calls updateDisplay
     private class GetPlayerTask extends AsyncTask<URL, Void, JSONArray> {
 
         @Override
@@ -223,6 +225,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, personList.toString());
     }
 
+    //if a person's login information corresponds to what is saved in the database,
+    //then the HomePage activity is initiated
+
+    //otherwise, a toast stating that there is incorrect login info pops up.
     private void updateDisplay() {
         if (personList == null) {
             Toast.makeText(MainActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();

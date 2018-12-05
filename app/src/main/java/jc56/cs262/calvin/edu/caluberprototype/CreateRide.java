@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TimePicker;
 import android.os.Bundle;
@@ -101,7 +102,8 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
     }
 
     //calling toast message after driver clicks "create a ride" button
-    //set all entry fields back to empty
+    //if all fields are filled out, create ride and return to home page
+    //otherwise, display toast asking for complete info.
     public void submitRideMsg(View view) {
 
         Spinner spinner = findViewById(R.id.number);
@@ -114,15 +116,18 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
         if (dateText.getText().length() > 0 && TimeText.getText().length() > 0 && StartText.getText().length() > 0 &&
                 EndText.getText().length()> 0) {
             toastMsg(getString(R.string.CreateRideMessage));
-            //set everything back to default
-            dateText.setText("");
-            TimeText.setText("");
-            StartText.setText("");
-            EndText.setText("");
-            spinner.setSelection(0);
+            //return home
+            go_to_home();
+
         } else { // else toast a message to fill out the form
             toastMsg(getString(R.string.CreateARideFailedMsg));
         }
+    }
+
+    public void go_to_home() {
+        Intent intent = new Intent(this, HomePage.class);
+        toastMsg("Logged In");
+        startActivity(intent);
     }
 
     //spinner for selecting date of departure
