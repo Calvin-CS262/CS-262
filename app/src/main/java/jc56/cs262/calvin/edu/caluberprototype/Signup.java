@@ -146,15 +146,7 @@ public class Signup extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray players) {
-            personList.clear();
-            if (players == null) {
-                Toast.makeText(MainActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-            } else if (players.length() == 0) {
-                Toast.makeText(MainActivity.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
-            } else {
-                convertJSONtoArrayList(players);
-            }
-            MainActivity.this.updateDisplay();
+            return_to_login();
         }
 
     }
@@ -173,7 +165,6 @@ public class Signup extends AppCompatActivity {
         }
         return null;
     }
-
 
 
     public void return_to_login() {
