@@ -5,23 +5,39 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.TimePicker;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
+
+//import com.google.api.server.spi.config.*;
+//import static com.google.api.server.spi.config.ApiMethod.HttpMethod.POST;
 
 /** CreateRide Class
  * Sets up the Create Ride activity
@@ -33,7 +49,17 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
     //TODO: implement google maps api to choose locations.
     //this will help streamline the search parameters for
     //finding a ride
+    private List<Ride> rideList = new ArrayList<>();
+
+
     String AmPm;
+    private static String TAG = "CreateRide";
+    private TextView DateText;
+    private EditText TimeText;
+    private EditText StartText;
+    private EditText EndText;
+    Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +67,12 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
 
         //for whatever reason the page crashes if you define view names outside of
         //methods so we have to do it here and in submitRideMsg
-        Spinner spinner = findViewById(R.id.number);
+        spinner = findViewById(R.id.number);
 
-        TextView dateText = findViewById(R.id.date_text);
-        EditText TimeText = findViewById(R.id.time);
-        EditText StartText = findViewById(R.id.startPoint);
-        EditText EndText = findViewById(R.id.destination);
+        DateText = findViewById(R.id.date_text);
+        TimeText = findViewById(R.id.time);
+        StartText = findViewById(R.id.startPoint);
+        EndText = findViewById(R.id.destination);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -115,15 +141,99 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
         //create write only if all fields are field
         if (dateText.getText().length() > 0 && TimeText.getText().length() > 0 && StartText.getText().length() > 0 &&
                 EndText.getText().length()> 0) {
+            new CreateRide.PostRideTask().execute(createURL(""));
             toastMsg(getString(R.string.CreateRideMessage));
             //return home
-            go_to_home();
+            //go_to_home();
 
         } else { // else toast a message to fill out the form
             toastMsg(getString(R.string.CreateARideFailedMsg));
         }
     }
 
+    //To get the list of players from the database
+    //on post execute calls updateDisplay
+    private class PostRideTask extends AsyncTask<URL, Void, JSONArray> {
+
+        @Override
+        protected JSONArray doInBackground(URL... params) {
+            HttpURLConnection connection = null;
+            StringBuilder jsonText = new StringBuilder();
+            JSONArray result = null;
+            try {
+                // Hard-code a new player using JSON.
+                JSONObject jsonData = new JSONObject();
+                jsonData.put("driverId", Globals.getInstance().getValue());
+                jsonData.put("departure", StartText.getText());
+                jsonData.put("destination", EndText.getText());
+                jsonData.put("passengerLimit", spinner.getSelectedItem().toString());
+                //get the date and time formatted correctly
+                String[] date = DateText.getText().toString().split(" ");
+                String dateTime;
+                switch (date[0]) {
+                    case
+
+                }
+                jsonData.put("departureDateTime", dateTime);
+                // Open the connection as usual.
+                connection = (HttpURLConnection) params[0].openConnection();
+                // Configure the connection for a POST, including outputing streamed JSON data.
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type","application/json");
+                connection.setFixedLengthStreamingMode(jsonData.toString().length());
+                DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+                out.writeBytes(jsonData.toString());
+                out.flush();
+                out.close();
+                // Handle the response from the (Lab09) server as usual.
+                Log.d(TAG, "dateTime string is: " + dateTime);
+//                Log.d(TAG, "Connection response code: " + getString(connection.getResponseCode()));
+//                Log.d(TAG, "HttpUrlConnection ok: " + getString(HttpURLConnection.HTTP_OK));
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(connection.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        jsonText.append(line);
+                    }
+                    Log.d(TAG, jsonText.toString());
+                    if (jsonText.charAt(0) == '[') {
+                        result = new JSONArray(jsonText.toString());
+                    } else if (jsonText.toString().equals("null")) {
+                        result = new JSONArray();
+                    } else {
+                        result = new JSONArray().put(new JSONObject(jsonText.toString()));
+                    }
+                } else {
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray rides) {
+            rideList.clear();
+            if (rides == null) {
+                Toast.makeText(CreateRide.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+            } else if (rides.length() == 0) {
+                Toast.makeText(CreateRide.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
+            } else {
+                convertJSONtoArrayList(rides);
+                CreateRide.this.go_to_home();
+            }
+        }
+
+    }
+
+    //redirect view to HomePage activity
     public void go_to_home() {
         Intent intent = new Intent(this, HomePage.class);
         toastMsg("Logged In");
@@ -157,6 +267,7 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
 
     }
 
+    //data selection widget
     public static class DatePickerFragment extends DialogFragment {
 
         @Override
@@ -196,4 +307,74 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
         }, currentHour, currentMinute, false);
         timePickerDialog.show();
     }
+
+    /**
+     * Formats a URL for the webservice specified in the string resources.
+     *
+     * @param id string version of the desired ID (or BLANK for all rides)
+     * @return URL formatted for the ride server
+     */
+    private URL createURL(String id) {
+        try {
+            String urlString = getString(R.string.web_service_url);
+            if (id.equals("")) {
+                urlString += "/ride";
+            } else {
+                throw new Exception();
+            }
+            return new URL(urlString);
+        } catch (Exception e) {
+            Toast.makeText(this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+        }
+
+        return null;
+    }
+
+    /**
+     * Converts the JSON player data to an arraylist suitable for a listview adapter
+     *
+     */
+//    private void convertArrayListtoJSON() {
+//        JSONObject rides = new JSONObject();
+//        Log.d(TAG, "convertArrayListtoJSON error");
+//        try {
+//            rides.put("driverId", Globals.getInstance().getValue());
+//            rides.put("departure", StartText.getText());
+//            rides.put("destination", EndText.getText());
+//            rides.put("passengerLimit", spinner.getSelectedItem().toString());
+//            String dateTime = DateText.getText().toString()+TimeText.getText().toString();
+//            rides.put("departureDateTime", dateTime);
+//
+//            } catch (JSONException e1) {
+//            e1.printStackTrace();
+//        }
+//
+//        Log.d(TAG, "something");
+//    }
+
+    /**
+     * Converts the JSON player data to an arraylist suitable for a listview adapter
+     *
+     * @param rides JSON array of player objects
+     */
+    private void convertJSONtoArrayList(JSONArray rides) {
+        Log.d(TAG, rides.toString());
+        try {
+            for (int i = 0; i < rides.length(); i++) {
+                JSONObject ride = rides.getJSONObject(i);
+                rideList.add(new Ride(
+                        ride.getInt("id"),
+                        ride.optInt("driverId", Globals.getInstance().getValue()),
+                        ride.optString("departure", "no departure"),
+                        ride.optString("destination", "no destination"),
+                        ride.optInt("passengerLimit", 0),
+                        ride.optString("departureDateTime", "no departure date")
+                ));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, rideList.toString());
+    }
+
 }

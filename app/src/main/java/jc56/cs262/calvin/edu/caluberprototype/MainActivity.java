@@ -1,35 +1,28 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;    //Added for connectivity
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;    //Added for connectivity
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;    //Added for connectivity
-import org.json.JSONException;    //Added for connectivity
-import org.json.JSONObject;    //Added for connectivity
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedReader;    //Added for connectivity
-import java.io.DataOutputStream;    //Added for connectivity
-import java.io.InputStreamReader;    //Added for connectivity
-import java.net.HttpURLConnection;    //Added for connectivity
-import java.net.URL;    //Added for connectivity
-import java.text.NumberFormat;    //Added for connectivity
-import java.util.ArrayList;    //Added for connectivity
-import java.util.HashMap;    //Added for connectivity
-import java.util.List;    //Added for connectivity
-import android.widget.SimpleAdapter;    //Added for connectivity
-import android.widget.ListView;    //Added for connectivity
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /** MainActivity class
  * This class sets up the Login Activity
@@ -88,9 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 new GetPlayerTask().execute(createURL(""));
             }
         });
-
-
-
     }
 
     //method to hide android keyboard when not in an editText
