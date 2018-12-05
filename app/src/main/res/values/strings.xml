@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">CalUber Prototype</string>
-    <string name="title_activity_basket">BasketActivity</string>
+    <string name="app_name">CalUber</string>
+    <string name="title_activity_basket">Basket</string>
     <string name="user_profile">UserProfile</string>
     <string name="date_text">Date</string>
     <string name="time_text">Time</string>
@@ -31,6 +31,9 @@
     <string name="web_service_url">https://caluber-221319.appspot.com/caluber/v1</string>
     <string name="connection_error">Check your internet connection and try again.</string>
     <string name="no_results_error">No results found</string>
+    <string name="rides_as_driver">Upcoming Rides as Driver</string>
+    <string name="rides_as_passenger">Upcoming Rides as Passenger</string>
+    <string name="ride_history">Ride History</string>
     <string-array name = "numbers">
         <item>1</item>
         <item>2</item>

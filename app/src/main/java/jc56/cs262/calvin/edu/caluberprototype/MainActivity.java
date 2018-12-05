@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //To get the list of players from the database
+    //To get the list of users from the database
     private class GetPlayerTask extends AsyncTask<URL, Void, JSONArray> {
 
         @Override
