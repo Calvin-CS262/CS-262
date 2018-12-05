@@ -64,8 +64,7 @@
         android:paddingLeft="@dimen/width_dim"
         android:paddingRight="@dimen/width_dim"
         android:paddingTop="@dimen/vertical_dim"
-        android:paddingBottom="@dimen/vertical_dim"
-        android:onClick="go_to_home"/>
+        android:paddingBottom="@dimen/vertical_dim" />
 
     <Button
         android:id="@+id/sign_up"
