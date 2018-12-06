@@ -1,35 +1,28 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;    //Added for connectivity
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;    //Added for connectivity
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;    //Added for connectivity
-import org.json.JSONException;    //Added for connectivity
-import org.json.JSONObject;    //Added for connectivity
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedReader;    //Added for connectivity
-import java.io.DataOutputStream;    //Added for connectivity
-import java.io.InputStreamReader;    //Added for connectivity
-import java.net.HttpURLConnection;    //Added for connectivity
-import java.net.URL;    //Added for connectivity
-import java.text.NumberFormat;    //Added for connectivity
-import java.util.ArrayList;    //Added for connectivity
-import java.util.HashMap;    //Added for connectivity
-import java.util.List;    //Added for connectivity
-import android.widget.SimpleAdapter;    //Added for connectivity
-import android.widget.ListView;    //Added for connectivity
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /** MainActivity class
  * This class sets up the Login Activity
@@ -81,15 +74,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //when someone clicks the "login" button, GetPlayerTask is called.
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new GetPlayerTask().execute(createURL(""));
             }
         });
-
-
-
     }
 
     //method to hide android keyboard when not in an editText
@@ -109,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    //Login check
+    //Change activity view to Home page
     public void go_to_home() {
             Intent intent = new Intent(this, HomePage.class);
             toastMsg("Logged In");
@@ -118,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //To get the list of players from the database
+    //on post execute calls updateDisplay
     private class GetPlayerTask extends AsyncTask<URL, Void, JSONArray> {
 
         @Override
@@ -223,6 +215,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, personList.toString());
     }
 
+    //if a person's login information corresponds to what is saved in the database,
+    //then the HomePage activity is initiated
+
+    //otherwise, a toast stating that there is incorrect login info pops up.
     private void updateDisplay() {
         if (personList == null) {
             Toast.makeText(MainActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
