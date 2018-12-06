@@ -82,11 +82,11 @@ public class Signup extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PostUserTask().execute(createURL(""));
                 firstNameText = firstName.getText().toString();
                 lastNameText = lastName.getText().toString();
                 calvinUsernameText = calvinUsername.getText().toString();
                 passwordText = password.getText().toString();
+                new PostUserTask().execute(createURL(""));
             }
         });
     }

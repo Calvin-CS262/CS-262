@@ -5,12 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".JoinRide"
+    android:background="@color/back_gray"
+
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
 
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="2dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <!--<android.support.v7.widget.Toolbar
@@ -21,6 +24,33 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />-->
 
     </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:hint="  Search by Destination"
+            android:text=""
+            android:textColor="#ffff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="95dp"
+            android:layout_height="46dp"
+            android:layout_alignRight="@id/search_bar"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:text="Search" />
+
+    </RelativeLayout>
 
     <include
         layout="@layout/content_join_ride"

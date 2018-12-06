@@ -1,5 +1,6 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
+import android.app.Activity;
 import android.os.Bundle;
 //import android.support.design.widget.FloatingActionButton;
 //import android.support.design.widget.Snackbar;
@@ -7,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -20,6 +23,8 @@ public class JoinRide extends AppCompatActivity {
     //TODO: add functionality and connect to database
     //TODO: allow drivers to delete rides that were created under their profile
 
+    private EditText searchBar;
+    private String searchBarText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,25 @@ public class JoinRide extends AppCompatActivity {
         ListView uRidesView = (ListView) findViewById(R.id.rides_available);
         uRidesView.setAdapter(uRidesAdapter);
         setListViewHeightBasedOnChildren(uRidesView);
+
+        searchBar = findViewById(R.id.search_bar);
+
+        //call hideKeyboard method
+        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) { hideKeyboard(v); }
+            }
+        });
+
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchBarText = searchBar.getText().toString();
+                //PutUserTask().execute(createURL(searchBarText);
+            }
+        });
+
+
     }
 
     /**** Method for Setting the Height of the ListView dynamically.
@@ -67,6 +91,11 @@ public class JoinRide extends AppCompatActivity {
         String[] hardcodedArray = {"newRide1","newRide2","newRide3","newRide4",
                 "newRide5"};
         return hardcodedArray;
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }
