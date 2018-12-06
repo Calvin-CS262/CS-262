@@ -170,14 +170,59 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
                 //get the date and time formatted correctly
                 String[] date = DateText.getText().toString().split(" ");
                 String dateTime;
-                switch (date[0]) {
-                    case
-
+                //formatting date
+                dateTime = date[2] + "-";   //year-
+                switch (date[0]) {          //month-
+                    case "Jan" :
+                        dateTime += "01-";
+                        break;
+                    case "Feb" :
+                        dateTime += "02-";
+                        break;
+                    case "Mar" :
+                        dateTime += "03-";
+                        break;
+                    case "Apr" :
+                        dateTime += "04-";
+                        break;
+                    case "May" :
+                        dateTime += "05-";
+                        break;
+                    case "Jun" :
+                        dateTime += "06-";
+                        break;
+                    case "Jul" :
+                        dateTime += "07-";
+                        break;
+                    case "Aug" :
+                        dateTime += "08-";
+                        break;
+                    case "Sep" :
+                        dateTime += "09-";
+                        break;
+                    case "Oct" :
+                        dateTime += "10-";
+                        break;
+                    case "Nov" :
+                        dateTime += "11-";
+                        break;
+                    case "Dec" :
+                        dateTime += "12-";
+                        break;
                 }
+                if (date[1].length() == 2) {
+                    dateTime += "0";
+                }
+                dateTime += date[1].substring(0, date[1].length() - 1); //day
+                dateTime += "T";
+                //formatting time
+//                Log.d(TAG, "'" + TimeText.getText().toString() + "'");
+                dateTime += TimeText.getText().toString().substring(0, 5) + ":00Z";
+
                 jsonData.put("departureDateTime", dateTime);
                 // Open the connection as usual.
                 connection = (HttpURLConnection) params[0].openConnection();
-                // Configure the connection for a POST, including outputing streamed JSON data.
+                // Configure the connection for a POST, including outputting streamed JSON data.
                 connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
                 connection.setRequestProperty("Content-Type","application/json");
@@ -187,7 +232,7 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
                 out.flush();
                 out.close();
                 // Handle the response from the (Lab09) server as usual.
-                Log.d(TAG, "dateTime string is: " + dateTime);
+//                Log.d(TAG, "dateTime string is: " + dateTime);
 //                Log.d(TAG, "Connection response code: " + getString(connection.getResponseCode()));
 //                Log.d(TAG, "HttpUrlConnection ok: " + getString(HttpURLConnection.HTTP_OK));
                 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
