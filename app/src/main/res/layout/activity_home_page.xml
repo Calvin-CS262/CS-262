@@ -53,7 +53,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_input_get"
+        app:srcCompat="@drawable/basketicon"
         tools:background="@color/colorPrimary"
         android:onClick="launchBasket"/>
 
