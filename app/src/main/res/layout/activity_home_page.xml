@@ -67,7 +67,8 @@
         app:srcCompat="@drawable/car2"
         tools:background="@color/colorPrimary"
         android:background="@color/colorPrimary"
-        tools:layout_editor_absoluteY="117dp" />
+        tools:layout_editor_absoluteY="117dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/profileButton"
@@ -81,7 +82,6 @@
         app:srcCompat="@drawable/avatar_small"
         tools:background="@color/colorPrimary"
         android:background="@color/colorPrimary"
-        android:onClick="launchUserProfile"
-        tools:targetApi="@color/colorPrimary" />
+        android:onClick="launchUserProfile" />
 
 </android.support.constraint.ConstraintLayout>
