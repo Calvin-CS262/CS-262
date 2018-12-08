@@ -76,11 +76,10 @@
             <ListView
                 android:id="@+id/rides_available"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                app:layout_scrollFlags="scroll|enterAlways"
+                android:layout_height="380dp"
                 android:choiceMode="singleChoice"
-                >
+                android:scrollbars="vertical"
+                app:layout_scrollFlags="scroll|enterAlways">
 
             </ListView>
 

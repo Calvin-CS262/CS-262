@@ -2,24 +2,16 @@ package jc56.cs262.calvin.edu.caluberprototype;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-//import android.support.design.widget.FloatingActionButton;
-//import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,7 +22,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -74,21 +65,35 @@ public class JoinRide extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent,View view,final int position,long id) {
-                final int pos = position;
-                AlertDialog.Builder builder = new AlertDialog.Builder(JoinRide.this);
-                builder.setMessage("Do you want to join this ride?")
-                        .setPositiveButton("Yes!",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                rideId = rideList.get(pos).getRideId();
-                                new JoinRide.PostPassengerTask().execute(createURL("passenger"));
-                            }
-                        })
-                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                //nothing happens
-                            }
-                        });
-                builder.create().show();
+            final int pos = position;
+            int thisRideId = rideList.get(pos).getRideId();
+            int available = rideList.get(pos).getPassengerLimit();
+            int numPassenger = 0;
+            new JoinRide.GetPassengerTask().execute(createURL("passengers"));
+            for (int i =0; i < passengerList.size(); i ++ ) {
+                if (passengerList.get(i).getRideId() == thisRideId ) {
+                    numPassenger =+ 1;
+                }
+            }
+            available = available - numPassenger;
+                if (available > 0 ) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(JoinRide.this);
+                    builder.setMessage("Do you want to join this ride?")
+                            .setPositiveButton("Yes!",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    new JoinRide.PostPassengerTask().execute(createURL("passenger"));
+                                }
+                            })
+                            .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    //nothing happens
+                                }
+                            });
+                    builder.create().show();
+                }
+                else {
+                    Toast.makeText(JoinRide.this, "This Ride is Full :(", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
@@ -111,6 +116,82 @@ public class JoinRide extends AppCompatActivity {
         });
 
 
+    }
+    private class GetPassengerTask extends AsyncTask<URL, Void, JSONArray> {
+
+        @Override
+        protected JSONArray doInBackground(URL... params) {
+            HttpURLConnection connection = null;
+            StringBuilder jsonText = new StringBuilder();
+            JSONArray result = null;
+            try {
+                connection = (HttpURLConnection) params[0].openConnection();
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(connection.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        jsonText.append(line);
+                    }
+                    //Log.d(TAG, jsonText.toString());
+                    if (jsonText.toString().startsWith("{ \"items\":")) {
+                        // Google Cloud can't return a raw JSON list, so we had to add this "items" field;
+                        // remove it now.
+                        String jsonItemsText = new JSONObject(jsonText.toString()).get("items").toString();
+                        result = new JSONArray(jsonItemsText);
+                    } else if (jsonText.toString().equals("null")) {
+                        result = new JSONArray();
+                    } else {
+                        result = new JSONArray().put(new JSONObject(jsonText.toString()));
+                    }
+                } else {
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+            return result;
+        }
+
+
+        @Override
+        protected void onPostExecute(JSONArray passengers) {
+            rideList.clear();
+            if (passengers == null) {
+                // Toast.makeText(JoinRide, "It's not connecting", Toast.LENGTH_SHORT).show();
+            } else if (passengers.length() == 0) {
+                //   Toast.makeText(JoinRide, "there is no result", Toast.LENGTH_SHORT).show();
+            } else {
+                convertJSONtoPassenger(passengers);
+            }
+        }
+
+    }
+
+    /**
+     * Converts the JSON ride data to an arraylist
+     *
+     * @param passengers JSON array of player objects
+     */
+    private void convertJSONtoPassenger(JSONArray passengers) {
+        Log.d(TAG,passengers.toString());
+        try {
+            for (int i = 0; i < passengers.length(); i++) {
+                JSONObject passenger = passengers.getJSONObject(i);
+                passengerList.add(new Passenger(
+                        passenger.getInt("id"),
+                        passenger.optInt("rideId"),
+                        passenger.optInt("personId")
+                ));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG,passengerList.toString());
     }
 
 
@@ -207,7 +288,11 @@ public class JoinRide extends AppCompatActivity {
                 urlString += "/rides";
             } else if (id.equals("passenger")) {
                 urlString += "/passenger";
-            } else {
+            }
+            else if (id.equals("passengers")) {
+                urlString += "/passengers";
+            }
+            else {
                 throw new Exception();
             }
             return new URL(urlString);
