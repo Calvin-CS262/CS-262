@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".JoinRide"
     android:background="@color/back_gray"
-
     android:orientation="vertical">
 
 
@@ -52,9 +51,41 @@
 
     </RelativeLayout>
 
-    <include
-        layout="@layout/content_join_ride"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/driveBasketTitle"
+        android:background="@color/colorAccent"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   Available Rides"/>
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="33">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/rides_available"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:choiceMode="singleChoice"
+                >
+
+            </ListView>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
