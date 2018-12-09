@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -22,25 +23,25 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /** BasketActivity Class
  * BasketActivity sets up the basket page, where users can see their upcoming rides and previous rides they've been on
  */
-//NEED TO FIGURE OUT HOW TO MAKE LISTVIEW FILL ALL OF SCROLLVIEW
 
 public class BasketActivity extends AppCompatActivity {
 
-    String[] upcomingRideArray = {"newRide1", "newRide2", "newRide3", "newRide4",
-            "newRide5"};
-    String[] upcomingDriveArray = {"newDrive1", "newDrive2", "newDrive3"};
+    ArrayList<String> upcomingRideArray = new ArrayList<>();
+    ArrayList<String> upcomingDriveArray = new ArrayList<>();
+    ArrayList<String> pastArray = new ArrayList<>();
 
-    String[] pastArray = {"PastRide1", "PastRide2", "PastRide3", "PastRide4",
-            "PastRide5", "PastRide6", "PastRide7"};
-
-    private List<Ride> RideList = new ArrayList<>();
-    private List<Passenger> PassengerList = new ArrayList<>();
+    private ArrayList<Ride> RideList = new ArrayList<>();
+    private ArrayList<Passenger> PassengerList = new ArrayList<>();
     private Globals userInfo = Globals.getInstance();
     private static String TAG = "BasketActivity";
 
@@ -50,6 +51,14 @@ public class BasketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basket);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        new GetRideTask().execute(createURL(""));
+        new GetPassengerTask().execute(createURL("passengers"));
+
+        Log.d(TAG, RideList.toString() + "List of Ride objects");
+        Log.d(TAG, PassengerList.toString() + "List of Passenger objects");
+
+
 
         ArrayAdapter uRidesAdapter = new ArrayAdapter<String>(this,
                 R.layout.activity_listview, upcomingRideArray);
@@ -73,8 +82,8 @@ public class BasketActivity extends AppCompatActivity {
         pastView.setAdapter(pastAdapter);
         setListViewHeightBasedOnChildren(pastView);
 
-        new GetRideTask().execute(createURL(""));
-        new GetPassengerTask().execute(createPassengerURL(""));
+
+
     }
 
     /**** Method for Setting the Height of the ListView dynamically.
@@ -99,6 +108,70 @@ public class BasketActivity extends AppCompatActivity {
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+    }
+
+    public void refresh(View view) {
+        Log.d(TAG, RideList.toString());
+        Log.d(TAG, PassengerList.toString());
+        upcomingDriveArray.clear();
+        upcomingRideArray.clear();
+        pastArray.clear();
+        Date today = Calendar.getInstance().getTime();
+        Log.d(TAG, today.toString());
+        for (int i = 0; i < RideList.size(); i++) {
+            if (RideList.get(i).getDriverId() == Globals.getInstance().getValue()) {
+                String rideDay = RideList.get(i).getDepartureDateTime();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                try {
+                    Date date = format.parse(rideDay);
+                    if (today.after(date)) {
+                        pastArray.add("Departure: " + RideList.get(i).getDeparture() + "  Destination: " + RideList.get(i).getDestination() + " Date: " + RideList.get(i).getDepartureDateTime());
+                    } else {
+                        upcomingDriveArray.add("Departure: " + RideList.get(i).getDeparture() + "  Destination: " + RideList.get(i).getDestination() + " Date: " + RideList.get(i).getDepartureDateTime());
+                    }
+                } catch (ParseException e) {
+                    Log.d(TAG, e.getMessage());
+                }
+            }
+            for (int j = 0; j < PassengerList.size(); j++) {
+                if (PassengerList.get(j).getPersonId() == Globals.getInstance().getValue() && PassengerList.get(j).getRideId() == RideList.get(i).getRideId()) {
+                    String rideDay = RideList.get(i).getDepartureDateTime();
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                    try {
+                        Date date = format.parse(rideDay);
+                        if (today.after(date)) {
+                            pastArray.add("Departure: " + RideList.get(i).getDeparture() + " Destination: " + RideList.get(i).getDestination() + " Date: " + RideList.get(i).getDepartureDateTime());
+                        } else {
+                            upcomingRideArray.add("Departure: " + RideList.get(i).getDeparture() + " Destination: " + RideList.get(i).getDestination() + " Date: " + RideList.get(i).getDepartureDateTime());
+                        }
+                    } catch (ParseException e) {
+                        Log.d(TAG, e.getMessage());
+                    }
+                }
+            }
+        }
+
+        ArrayAdapter uRidesAdapter = new ArrayAdapter<String>(this,
+                R.layout.activity_listview, upcomingRideArray);
+
+        ArrayAdapter uDrivesAdapter = new ArrayAdapter<String>(this,
+                R.layout.activity_listview, upcomingDriveArray);
+
+        ArrayAdapter pastAdapter = new ArrayAdapter<String>(this,
+                R.layout.activity_listview, pastArray);
+
+        ListView uRidesView = (ListView) findViewById(R.id.upcoming_rides);
+        uRidesView.setAdapter(uRidesAdapter);
+        setListViewHeightBasedOnChildren(uRidesView);
+
+
+        ListView uDriveView = (ListView) findViewById(R.id.upcoming_drives);
+        uDriveView.setAdapter(uDrivesAdapter);
+        setListViewHeightBasedOnChildren(uDriveView);
+
+        ListView pastView = (ListView) findViewById(R.id.past_rides);
+        pastView.setAdapter(pastAdapter);
+        setListViewHeightBasedOnChildren(pastView);
     }
 
     //To get the list of users from the database
@@ -146,13 +219,14 @@ public class BasketActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray rides) {
             RideList.clear();
-            if (rides == null) {
-                Toast.makeText(BasketActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-            } else if (rides.length() == 0) {
-                Toast.makeText(BasketActivity.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
-            } else {
-                convertRideJSONtoArrayList(rides);
-            }
+            convertRideJSONtoArrayList(rides);
+//            if (rides == null) {
+//                //Toast.makeText(BasketActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+//            } else if (rides.length() == 0) {
+//                //Toast.makeText(BasketActivity.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
+//            } else {
+//                convertRideJSONtoArrayList(rides);
+//            }
         }
 
     }
@@ -200,40 +274,41 @@ public class BasketActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray passengers) {
-            RideList.clear();
-            if (passengers == null) {
-                Toast.makeText(BasketActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-            } else if (passengers.length() == 0) {
-                Toast.makeText(BasketActivity.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
-            } else {
-                convertPassengerJSONtoArrayList(passengers);
-            }
+            PassengerList.clear();
+            convertPassengerJSONtoArrayList(passengers);
+//            if (passengers == null) {
+////                Toast.makeText(BasketActivity.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+//            } else if (passengers.length() == 0) {
+////                Toast.makeText(BasketActivity.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
+//            } else {
+//                convertPassengerJSONtoArrayList(passengers);
+//            }
         }
 
     }
 
     private void convertRideJSONtoArrayList(JSONArray rides) {
-        Log.d(TAG, rides.toString());
+        Log.d(TAG, rides.toString() + " Before conversion");
         try {
             for (int i = 0; i < rides.length(); i++) {
-                JSONObject player = rides.getJSONObject(i);
+                JSONObject ride = rides.getJSONObject(i);
                 RideList.add(new Ride(
-                        player.getInt("rideId"),
-                        player.getInt("driverId"),
-                        player.optString("departure", "no departure"),
-                        player.optString("destination", "no destination"),
-                        player.optInt("passengerLimit"),
-                        player.optString("departureDateTime", "no departure date and time")
+                        ride.getInt("rideId"),
+                        ride.getInt("driverId"),
+                        ride.optString("departure", "no departure"),
+                        ride.optString("destination", "no destination"),
+                        ride.optInt("passengerLimit"),
+                        ride.optString("departureDateTime", "no departure date and time")
                 ));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, RideList.toString());
+        Log.d(TAG, RideList.toString() + "After conversion");
     }
 
     private void convertPassengerJSONtoArrayList(JSONArray passengers) {
-        Log.d(TAG, passengers.toString());
+        Log.d(TAG, passengers.toString() + "Before conversion");
         try {
             for (int i = 0; i < passengers.length(); i++) {
                 JSONObject passenger = passengers.getJSONObject(i);
@@ -247,7 +322,7 @@ public class BasketActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, RideList.toString());
+        Log.d(TAG, PassengerList.toString() + "After conversion");
     }
 
     private URL createURL(String id) {
@@ -255,24 +330,12 @@ public class BasketActivity extends AppCompatActivity {
             String urlString = getString(R.string.web_service_url);
             if (id.equals("")) {
                 urlString += "/rides";
-            } else {
-                urlString += "/rides/" + id;
-            }
-            return new URL(urlString);
-        } catch (Exception e) {
-            Toast.makeText(this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-        }
-
-        return null;
-    }
-
-    private URL createPassengerURL(String id) {
-        try {
-            String urlString = getString(R.string.web_service_url);
-            if (id.equals("")) {
+            } else if (id.equals("passenger")) {
+                urlString += "/passenger";
+            } else if (id.equals("passengers")) {
                 urlString += "/passengers";
             } else {
-                urlString += "/passengers/" + id;
+                throw new Exception();
             }
             return new URL(urlString);
         } catch (Exception e) {
@@ -281,4 +344,5 @@ public class BasketActivity extends AppCompatActivity {
 
         return null;
     }
+
 }
