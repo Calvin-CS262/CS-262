@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * Converts the JSON player data to an arraylist suitable for a listview adapter
+     * Converts the JSON player data to an arraylist
      *
      * @param players JSON array of player objects
      */
