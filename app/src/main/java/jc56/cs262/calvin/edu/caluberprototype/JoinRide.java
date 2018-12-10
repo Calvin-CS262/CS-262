@@ -83,11 +83,13 @@ public class JoinRide extends AppCompatActivity {
                             .setPositiveButton("Yes!",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     new JoinRide.PostPassengerTask().execute(createURL("passenger"));
+//                                    listView.getDisplay();    //Automatically refreshing listView (doesn't work on JoinRide)
                                 }
                             })
                             .setNegativeButton("No",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     //nothing happens
+//                                    listView.getDisplay();
                                 }
                             });
                     builder.create().show();
