@@ -25,6 +25,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -263,14 +264,28 @@ public class JoinRide extends AppCompatActivity {
         try {
             for (int i = 0; i < rides.length(); i++) {
                 JSONObject ride = rides.getJSONObject(i);
-                rideList.add(new Ride(
+                //Check if ride is in the future
+                //If it is, show it (by adding it to rideList
+                Ride tempRide = new Ride(
                         ride.getInt("rideId"),
                         ride.optInt("driverId"),
                         ride.optString("departure"),
                         ride.optString("destination"),
                         ride.optInt("passengerLimit"),
                         ride.optString("departureDateTime")
-                ));
+                );
+                Instant checkDateTime = Instant.parse(tempRide.getDepartureDateTime());
+                if (checkDateTime.isAfter(checkDateTime.now())) {
+                    rideList.add(tempRide);
+                }
+//                rideList.add(new Ride(
+//                        ride.getInt("rideId"),
+//                        ride.optInt("driverId"),
+//                        ride.optString("departure"),
+//                        ride.optString("destination"),
+//                        ride.optInt("passengerLimit"),
+//                        ride.optString("departureDateTime")
+//                ));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -362,7 +377,7 @@ public class JoinRide extends AppCompatActivity {
             } else if (passengers.length() == 0) {
                 Toast.makeText(JoinRide.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
             } else {
-                convertJSONtoArrayList(passengers);
+                convertJSONtoPassenger(passengers);
 //                JoinRide.this.go_to_home();
             }
         }
