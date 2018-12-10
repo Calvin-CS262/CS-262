@@ -83,12 +83,10 @@ public class JoinRide extends AppCompatActivity {
                             .setPositiveButton("Yes!",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     new JoinRide.PostPassengerTask().execute(createURL("passenger"));
-                                    listView.requestLayout();
                                 }
                             })
                             .setNegativeButton("No",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
-                                    listView.requestLayout();
                                     //nothing happens
                                 }
                             });
