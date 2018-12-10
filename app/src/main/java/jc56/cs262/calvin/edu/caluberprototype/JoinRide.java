@@ -3,6 +3,7 @@ package jc56.cs262.calvin.edu.caluberprototype;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -66,12 +67,12 @@ public class JoinRide extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent,View view,final int position,long id) {
             final int pos = position;
-            int thisRideId = rideList.get(pos).getRideId();
+            rideId = rideList.get(pos).getRideId();
             int available = rideList.get(pos).getPassengerLimit();
             int numPassenger = 0;
             new JoinRide.GetPassengerTask().execute(createURL("passengers"));
             for (int i =0; i < passengerList.size(); i ++ ) {
-                if (passengerList.get(i).getRideId() == thisRideId ) {
+                if (passengerList.get(i).getRideId() == rideId ) {
                     numPassenger =+ 1;
                 }
             }
@@ -313,7 +314,7 @@ public class JoinRide extends AppCompatActivity {
             JSONArray result = null;
             try {
                 JSONObject jsonData = new JSONObject();
-                jsonData.put("rideId",rideId);
+                jsonData.put("rideId", rideId);
                 jsonData.put("personId",Globals.getInstance().getValue());
                 connection = (HttpURLConnection) params[0].openConnection();
                 connection.setRequestMethod("POST");
@@ -351,7 +352,24 @@ public class JoinRide extends AppCompatActivity {
             }
             return result;
         }
+        @Override
+        protected void onPostExecute(JSONArray passengers) {
+            passengerList.clear();
+            if (passengers == null) {
+                Toast.makeText(JoinRide.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+            } else if (passengers.length() == 0) {
+                Toast.makeText(JoinRide.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
+            } else {
+                convertJSONtoArrayList(passengers);
+//                JoinRide.this.go_to_home();
+            }
+        }
+    }
 
+    //redirect view to HomePage activity
+    public void go_to_home() {
+        Intent intent = new Intent(this, HomePage.class);
+        startActivity(intent);
     }
 
 
