@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 import android.view.View;
 
@@ -31,6 +32,8 @@ public class UserProfile extends AppCompatActivity {
     private EditText changePassword;
     private TextView userEmail;
     private TextView userName;
+    private Button changeNameButton;
+    private Button changePassButton;
 
     private static String TAG = "UserProfile";
 
@@ -44,9 +47,25 @@ public class UserProfile extends AppCompatActivity {
         changePassword = findViewById(R.id.change_pass);
         userEmail = findViewById(R.id.editText10);
         userName = findViewById(R.id.editText11);
+        changeNameButton = findViewById(R.id.name_button);
+        changePassButton = findViewById(R.id.pass_button);
 
 
         new GetPlayerTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
+
+        changeNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PutPlayerNameTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
+            }
+        });
+
+        changePassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PutPlayerPassTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
+            }
+        });
     }
 
 
@@ -188,7 +207,7 @@ public class UserProfile extends AppCompatActivity {
 
     }
 
-    private class PutPlayerTask extends AsyncTask<URL, Void, JSONArray> {
+    private class PutPlayerNameTask extends AsyncTask<URL, Void, JSONArray> {
 
         @Override
         protected JSONArray doInBackground(URL... params) {
@@ -198,16 +217,109 @@ public class UserProfile extends AppCompatActivity {
             JSONObject jsonData = new JSONObject();
             try {
 
+                //Getting internal data for person
+                Person item = personList.get(0);
+                jsonData.put("personId", item.getPersonId());
+                //making sure not adding another "@students.calvin.edu" to end of email
+                String[] emailStringList = item.getEmail().split("@");
+                jsonData.put("email", emailStringList[0]);
+                jsonData.put("password", item.getPassword());
+                //Changing name
                 String newName = changeName.getText().toString();
                 String[] nameList = newName.split(" ");
                 newName = "";
+                Log.d(TAG, "before for loop: " + newName);
                 for (int i = 1; i < nameList.length; i++) {
-                    newName += nameList + " ";
+                    newName += nameList[i] + " ";
+                    Log.d(TAG, "after " + i + "th Last name: " + newName);
                 }
-                newName = newName.substring(0, newName.length()); //takes off last space
-                jsonData.put("firstName", nameList[0]);
+                Log.d(TAG, "before substring: " + newName);
+                newName = newName.substring(0, newName.length() - 1); //takes off last space
+//                Log.d(TAG, "after substring: " + newName);
                 jsonData.put("lastName", newName);
-                jsonData.put("userName", "new@calvin.edu");
+                jsonData.put("firstName", nameList[0]);
+                //Saving changes internally
+                item.setFirstName(nameList[0]);
+                item.setLastName(newName);
+                personList.set(0, item);
+
+                connection = (HttpURLConnection) params[0].openConnection();
+                connection.setRequestMethod("PUT");
+                connection.setDoOutput(true);
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setFixedLengthStreamingMode(jsonData.toString().length());
+                DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+                out.writeBytes(jsonData.toString());
+                out.flush();
+                out.close();
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(connection.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        jsonText.append(line);
+                    }
+                    //Log.d(TAG, jsonText.toString());
+                    if (jsonText.charAt(0) == '[') {
+                        result = new JSONArray(jsonText.toString());
+                    } else if (jsonText.toString().equals("null")) {
+                        result = new JSONArray();
+                    } else {
+                        result = new JSONArray().put(new JSONObject(jsonText.toString()));
+                    }
+                } else {
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray players) {
+            personList.clear();
+            if (players == null) {
+                Toast.makeText(UserProfile.this, getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
+            } else if (players.length() == 0) {
+                Toast.makeText(UserProfile.this, getString(R.string.no_results_error), Toast.LENGTH_SHORT).show();
+            } else {
+                convertJSONtoArrayList(players);
+            }
+            UserProfile.this.updateDisplay();
+        }
+    }
+
+
+    private class PutPlayerPassTask extends AsyncTask<URL, Void, JSONArray> {
+
+        @Override
+        protected JSONArray doInBackground(URL... params) {
+            HttpURLConnection connection = null;
+            StringBuilder jsonText = new StringBuilder();
+            JSONArray result = null;
+            JSONObject jsonData = new JSONObject();
+            try {
+
+                //Getting internal data for person
+                Person item = personList.get(0);
+                jsonData.put("personId", item.getPersonId());
+                //making sure not adding another "@students.calvin.edu" to end of email
+                String[] emailStringList = item.getEmail().split("@");
+                jsonData.put("email", emailStringList[0]);
+                //Changing password in database
+                jsonData.put("password", changePassword.getText().toString());
+
+                jsonData.put("lastName", item.getLastName());
+                jsonData.put("firstName", item.getFirstName());
+                //Saving changes internally
+                item.setPassword(changePassword.getText().toString());
+                personList.set(0, item);
+
                 connection = (HttpURLConnection) params[0].openConnection();
                 connection.setRequestMethod("PUT");
                 connection.setDoOutput(true);

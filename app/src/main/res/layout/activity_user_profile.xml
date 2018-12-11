@@ -9,7 +9,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".MainActivity"
+    tools:context=".UserProfile"
     tools:layout_editor_absoluteY="81dp">
 
 
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_gravity="left"
-            android:text="  Name: "
+            android:text="Name: "
             android:textColor="#FFFFFFFF"
             android:textSize="21sp"
             android:textStyle="bold"
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="left"
-            android:text="  Email: "
+            android:text="Email: "
             android:textColor="#FFFFFFFF"
             android:textSize="21sp"
             android:textStyle="bold"
@@ -71,24 +71,24 @@
             app:layout_constraintTop_toTopOf="@id/constraint2"
             />
 
-        <EditText
+        <TextView
             android:id="@+id/editText10"
             android:layout_width="215dp"
             android:layout_height="40dp"
             android:layout_marginLeft="116dp"
             android:ems="10"
-            android:hint="Email"
+            android:text=""
             android:inputType="textPersonName"
             app:layout_constraintLeft_toLeftOf="@id/name"
             app:layout_constraintTop_toTopOf="@id/constraint2" />
 
-        <EditText
+        <TextView
             android:id="@+id/editText11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="116dp"
             android:ems="10"
-            android:hint="Name"
+            android:hint=""
             android:inputType="textPersonName"
             app:layout_constraintLeft_toLeftOf="@id/email"
             app:layout_constraintTop_toBottomOf="@id/editText10" />
@@ -142,7 +142,8 @@
             app:layout_constraintBottom_toBottomOf="@id/change_name"
             app:layout_constraintLeft_toRightOf="@id/change_name"
             app:layout_constraintTop_toTopOf="@id/constraintLayout"
-            tools:layout_editor_absoluteY="235dp" />
+            tools:layout_editor_absoluteY="235dp"
+            android:onClick="displayToastMsgN"/>
 
         <Button
             android:id="@+id/pass_button"
@@ -152,7 +153,9 @@
             app:layout_constraintBottom_toBottomOf="@id/change_pass"
             app:layout_constraintLeft_toRightOf="@id/change_pass"
             app:layout_constraintTop_toBottomOf="@id/name_button"
-            tools:layout_editor_absoluteY="285dp" />
+            tools:layout_editor_absoluteY="285dp"
+            android:onClick="displayToastMsgP" />
+
 
     </android.support.constraint.ConstraintLayout>
 
