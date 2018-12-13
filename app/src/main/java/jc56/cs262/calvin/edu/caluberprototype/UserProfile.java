@@ -1,9 +1,14 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 import android.view.View;
@@ -43,6 +48,9 @@ public class UserProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         changeName = findViewById(R.id.change_name);
         changePassword = findViewById(R.id.change_pass);
         userEmail = findViewById(R.id.editText10);
@@ -57,6 +65,8 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new PutPlayerNameTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
+                // displayToastMsgN(v);
+
             }
         });
 
@@ -81,8 +91,60 @@ public class UserProfile extends AppCompatActivity {
     }
 
     public void displayToastMsgN(View w) {
+
         toastMsg("Name changed");
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.help, menu);
+        return true;
+    }
+
+
+
+    private String helpMessage =
+            "To change your name on CalUber:" +
+                    "\n" +
+                    "1. Click on the user profile icon located on the top left corner of the home page." +
+                    "\n" +
+                    "2. Click on the name field on the bottom of the screen." +
+                    "\n" +
+                    "3. Enter your new name and click on the change name button. \n" +
+                    "\n"+
+
+                    "To change your password in CalUber:" +
+                    "\n" +
+                    "1.  Click on the user profile icon located on the top left corner of the home page." +
+                    "\n" +
+                    "2.Click on the password field on the bottom of the screen.\n" +
+                    "3. Enter your new password and click on the change password button.\n";
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserProfile.this);
+            builder.setMessage(helpMessage)
+                    .setPositiveButton("Okay",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            builder.create().show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     //To get the list of players from the database
     //on post execute calls updateDisplay
@@ -291,6 +353,7 @@ public class UserProfile extends AppCompatActivity {
                 convertJSONtoArrayList(players);
             }
             UserProfile.this.updateDisplay();
+            toastMsg("Name changed"); //toast for successfully changing the name
         }
     }
 
@@ -368,7 +431,8 @@ public class UserProfile extends AppCompatActivity {
                 convertJSONtoArrayList(players);
             }
             UserProfile.this.updateDisplay();
+            toastMsg("Password changed"); //toast for successfully changing the password
+
         }
     }
 }
-

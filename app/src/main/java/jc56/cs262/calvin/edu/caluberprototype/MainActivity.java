@@ -102,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Change activity view to Home page
     public void go_to_home() {
-            Intent intent = new Intent(this, HomePage.class);
-            toastMsg("Logged In");
-            startActivity(intent);
+        Intent intent = new Intent(this, HomePage.class);
+        toastMsg("Logged In");
+        startActivity(intent);
     }
 
 

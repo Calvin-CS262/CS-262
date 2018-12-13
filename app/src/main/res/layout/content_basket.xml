@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/back_gray"
+    android:background="@color/colorPrimary"
     android:weightSum="99"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".BasketActivity"
@@ -22,16 +22,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/refresh_button"
+        android:background="@color/colorPrimary"
         app:srcCompat="@drawable/refreshicon"
-        android:background="@color/back_gray"
         android:onClick="refresh"/>
 
 
     <TextView
         android:id="@+id/driveBasketTitle"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:textStyle="bold"
-        android:textColor="@color/back_gray"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,48 +41,50 @@
         android:id="@+id/scroll1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:layout_weight="33">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ListView
                 android:id="@+id/upcoming_drives"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:scrollbars="vertical"
                 app:layout_scrollFlags="scroll|enterAlways"/>
         </LinearLayout>
 
     </ScrollView>
 
-        <TextView
-            android:id="@+id/rideBasketTitle"
-            android:background="@color/colorPrimary"
-            android:textStyle="bold"
-            android:textColor="@color/back_gray"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/passenger_rides"/>
+    <TextView
+        android:id="@+id/rideBasketTitle"
+        android:background="@color/colorAccent"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/passenger_rides"/>
 
     <ScrollView
         android:id="@+id/scroll2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:layout_weight="33">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ListView
                 android:id="@+id/upcoming_rides"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:scrollbars="vertical"/>
         </LinearLayout>
 
@@ -90,9 +92,9 @@
 
     <TextView
         android:id="@+id/pastBasketTitle"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:textStyle="bold"
-        android:textColor="@color/back_gray"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -102,17 +104,18 @@
         android:id="@+id/scroll3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:layout_weight="33">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ListView
                 android:id="@+id/past_rides"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:scrollbars="vertical"/>
 
         </LinearLayout>
