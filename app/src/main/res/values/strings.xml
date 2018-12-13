@@ -36,6 +36,7 @@
     <string name="refresh_prompt">If nothing shows up, try refreshing the page.</string>
     <string name="passenger_rides">Upcoming Rides as Passenger</string>
     <string name="help">help</string>
+    <string name="desc">this is a description</string>
     <string-array name = "numbers">
         <item>1</item>
         <item>2</item>
