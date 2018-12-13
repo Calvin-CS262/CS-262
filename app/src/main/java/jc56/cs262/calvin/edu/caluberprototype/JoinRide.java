@@ -5,14 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
@@ -66,9 +61,6 @@ public class JoinRide extends AppCompatActivity {
         listView.setAdapter(mAdapter);
         listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         searchBar = findViewById(R.id.search_bar);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -129,30 +121,6 @@ public class JoinRide extends AppCompatActivity {
 
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.help, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(JoinRide.this, "Action clicked", Toast.LENGTH_LONG).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private class GetPassengerTask extends AsyncTask<URL, Void, JSONArray> {
 
         @Override
@@ -272,7 +240,6 @@ public class JoinRide extends AppCompatActivity {
         }
 
 
-        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected void onPostExecute(JSONArray rides) {
             rideList.clear();
@@ -292,7 +259,6 @@ public class JoinRide extends AppCompatActivity {
      *
      * @param rides JSON array of player objects
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void convertJSONtoArrayList(JSONArray rides) {
         Log.d(TAG,rides.toString());
         try {

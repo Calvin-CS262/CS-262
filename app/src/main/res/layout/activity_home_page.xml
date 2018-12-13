@@ -7,7 +7,6 @@
     android:background="@color/colorPrimary"
     tools:context=".HomePage">
 
-
     <Button
         android:id="@+id/startARide_button"
         android:layout_width="204dp"

@@ -1,17 +1,12 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 //import android.support.design.widget.FloatingActionButton;
 //import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -56,9 +51,6 @@ public class BasketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_basket);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         new GetRideTask().execute(createURL(""));
         new GetPassengerTask().execute(createURL("passengers"));
@@ -93,44 +85,6 @@ public class BasketActivity extends AppCompatActivity {
 
 
     }
-
-    private String helpMessage =
-            "Past Rides:\n" +
-                    "You can use this section of the Rides page to look at past rides that you have been on.\n" +
-                    "\n" +
-                    "Imagine that you want to remember when you carpooled to a certain destination. To do this you can:\n" +
-                    "1. Click on the Rides page button at the top right of the home page.\n" +
-                    "2. Scroll down to the Past Rides section.\n" +
-                    "3. Look for the ride you are searching for.";
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.help, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(BasketActivity.this);
-            builder.setMessage(helpMessage)
-                    .setPositiveButton("Okay",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            builder.create().show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     /**** Method for Setting the Height of the ListView dynamically.
      **** Hack to fix the issue of not showing all the items of the ListView

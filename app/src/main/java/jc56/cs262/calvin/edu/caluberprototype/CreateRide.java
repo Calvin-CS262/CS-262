@@ -1,20 +1,15 @@
 package jc56.cs262.calvin.edu.caluberprototype;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -69,9 +64,6 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ride);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //for whatever reason the page crashes if you define view names outside of
         //methods so we have to do it here and in submitRideMsg
@@ -115,57 +107,6 @@ public class CreateRide extends AppCompatActivity implements DatePickerDialog.On
                 }
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.help, menu);
-        return true;
-    }
-
-    private String helpMessage =
-        "Starting a ride\n" +
-                "\n" +
-                "You can use the start a ride feature to create a carpool for other people to see and join.\n" +
-                "\n" +
-                "Imagine you want to create a ride from Calvin campus to Meijer on 28th Street with room for 3 passengers. " +
-                "These steps \n" +
-                "detial how to:\n" +
-                "\n1. Navigate to the create ride feature,\n" +
-                "2. Choose a date and time for the ride,\n" +
-                "3. Enter starting location and destination,\n" +
-                "4. Specify the number of passengers.\n" +
-                "\n" +
-                "Press the Start a Ride button on the home page.\n" +
-                "Press the Pick Date button and enter the date using the Android date picker.\n\n" +
-                "Press the Pick Time button and enter the time using the Android time picker.\n" +
-                "\nYou must enter the hour of your ride before you can enter the minute.\n" +
-                "Enter the starting location and destination by pressing the text prompt for each field.\n" +
-                "To select number of passengers, click the dropdown arrow and select a number.\n" +
-                "Once all fields have an entry, you can press Create Ride to create the carpool object.\n" +
-                "\nIf at least one field does not have an entry, you will not be able to create a ride.";
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(CreateRide.this);
-            builder.setMessage(helpMessage)
-                    .setPositiveButton("Okay",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            builder.create().show();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     //method to hide android keyboard when not in an editText

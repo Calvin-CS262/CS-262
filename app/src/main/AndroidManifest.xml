@@ -24,23 +24,19 @@
             android:name=".BasketActivity"
             android:label="@string/title_activity_basket"
             android:parentActivityName=".HomePage"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".UserProfile"
-            android:parentActivityName=".HomePage"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".HomePage">
 
         </activity>
         <activity
             android:name=".CreateRide"
-            android:parentActivityName=".HomePage"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".HomePage">
         </activity>
         <activity
             android:name=".JoinRide"
-            android:parentActivityName=".HomePage"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".HomePage">
         </activity>
         <activity android:name= ".HomePage"></activity>
         <activity
