@@ -5,9 +5,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
@@ -61,23 +66,26 @@ public class JoinRide extends AppCompatActivity {
         listView.setAdapter(mAdapter);
         listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         searchBar = findViewById(R.id.search_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent,View view,final int position,long id) {
-            final int pos = position;
-            rideId = rideList.get(pos).getRideId();
-            int available = rideList.get(pos).getPassengerLimit();
-            int numPassenger = 0;
-            new JoinRide.GetPassengerTask().execute(createURL("passengers"));
-            for (int i =0; i < passengerList.size(); i ++ ) {
-                if (passengerList.get(i).getRideId() == rideId ) {
-                    numPassenger =+ 1;
+                final int pos = position;
+                rideId = rideList.get(pos).getRideId();
+                int available = rideList.get(pos).getPassengerLimit();
+                int numPassenger = 0;
+                new JoinRide.GetPassengerTask().execute(createURL("passengers"));
+                for (int i =0; i < passengerList.size(); i ++ ) {
+                    if (passengerList.get(i).getRideId() == rideId ) {
+                        numPassenger =+ 1;
+                    }
                 }
-            }
-            available = available - numPassenger;
+                available = available - numPassenger;
                 if (available > 0 ) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(JoinRide.this);
                     builder.setMessage("Do you want to join this ride?")
@@ -121,6 +129,46 @@ public class JoinRide extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.help, menu);
+        return true;
+    }
+
+
+
+    private String helpMessage =
+            "To join a ride:\n" +
+                    "1. Find a ride that you would like to join." +
+                    "\t(optional: use the search bar to search by destination)\n" +
+                    "2. Select the ride you would like to join.\n" +
+                    "3. Select \"Yes\" in the popup to join the ride you have selected.";
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(JoinRide.this);
+            builder.setMessage(helpMessage)
+                    .setPositiveButton("Okay",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            builder.create().show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private class GetPassengerTask extends AsyncTask<URL, Void, JSONArray> {
 
         @Override
@@ -240,6 +288,7 @@ public class JoinRide extends AppCompatActivity {
         }
 
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected void onPostExecute(JSONArray rides) {
             rideList.clear();
@@ -259,6 +308,7 @@ public class JoinRide extends AppCompatActivity {
      *
      * @param rides JSON array of player objects
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void convertJSONtoArrayList(JSONArray rides) {
         Log.d(TAG,rides.toString());
         try {
