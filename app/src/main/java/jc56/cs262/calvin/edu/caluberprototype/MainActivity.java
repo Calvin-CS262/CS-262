@@ -75,10 +75,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //when someone clicks the "login" button, GetPlayerTask is called.
+        // Currently disabled in order to test navigation tab UI.
+        // Uncomment line of code to re-enable full database query
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new GetPlayerTask().execute(createURL(""));
+                //new GetPlayerTask().execute(createURL(""));
+                go_to_home();
             }
         });
     }
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Change activity view to Home page
     public void go_to_home() {
-        Intent intent = new Intent(this, HomePage.class);
+        Intent intent = new Intent(this, TabHomePage.class);
         toastMsg("Logged In");
         startActivity(intent);
     }

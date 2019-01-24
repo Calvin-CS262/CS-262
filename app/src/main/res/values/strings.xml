@@ -37,11 +37,19 @@
     <string name="passenger_rides">Upcoming Rides as Passenger</string>
     <string name="help">help</string>
     <string name="desc">this is a description</string>
-    <string-array name = "numbers">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
+    <string-array name="numbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
+    <string name="title_activity_tab_home_page">TabHomePage</string>
+    <string name="title_home">Home</string>
+    <string name="title_basket">Rides</string>
+    <string name="title_profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="join_a_ride">Join A Ride</string>
 </resources>
