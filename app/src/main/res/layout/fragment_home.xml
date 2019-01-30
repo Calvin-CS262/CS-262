@@ -24,7 +24,8 @@
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@color/back_gray"
         android:paddingLeft="50dp"
-        android:paddingRight="50dp"/>
+        android:paddingRight="50dp"
+        android:onClick="launchCreateRide"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
         android:textColor="@color/back_gray"
         android:paddingRight="60dp"
         android:paddingLeft="60dp"
-        android:text="@string/join_a_ride"/>
+        android:text="@string/join_a_ride"
+        android:onClick="launchJoinRide"/>
 
 </RelativeLayout>

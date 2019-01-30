@@ -59,9 +59,9 @@ public class UserProfile extends AppCompatActivity {
         changePassButton = findViewById(R.id.pass_button);
 
 
-        new GetPlayerTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
+        /*new GetPlayerTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));*/
 
-        changeNameButton.setOnClickListener(new View.OnClickListener() {
+        /*changeNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new PutPlayerNameTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
@@ -75,7 +75,7 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(View v) {
                 new PutPlayerPassTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
             }
-        });
+        });*/
     }
 
 
@@ -148,7 +148,7 @@ public class UserProfile extends AppCompatActivity {
 
     //To get the list of players from the database
     //on post execute calls updateDisplay
-    private class GetPlayerTask extends AsyncTask<URL, Void, JSONArray> {
+   /* private class GetPlayerTask extends AsyncTask<URL, Void, JSONArray> {
 
         @Override
         protected JSONArray doInBackground(URL... params) {
@@ -205,12 +205,12 @@ public class UserProfile extends AppCompatActivity {
     }
 
 
-    /**
+    *//**
      * Formats a URL for the webservice specified in the string resources.
      *
      * @param id string version of the desired ID (or BLANK for all players)
      * @return URL formatted for the course monopoly server
-     */
+     *//*
     private URL createURL(String id) {
         try {
             String urlString = getString(R.string.web_service_url);
@@ -228,11 +228,11 @@ public class UserProfile extends AppCompatActivity {
     }
 
 
-    /**
+    *//**
      * Converts the JSON player data to an arraylist suitable for a listview adapter
      *
      * @param players JSON array of player objects
-     */
+     *//*
     private void convertJSONtoArrayList(JSONArray players) {
         Log.d(TAG, players.toString());
         try {
@@ -434,5 +434,5 @@ public class UserProfile extends AppCompatActivity {
             toastMsg("Password changed"); //toast for successfully changing the password
 
         }
-    }
+    }*/
 }
