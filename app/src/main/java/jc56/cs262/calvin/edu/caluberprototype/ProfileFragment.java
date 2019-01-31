@@ -58,7 +58,12 @@ public class ProfileFragment extends Fragment {
         changePassButton = getView().findViewById(R.id.pass_button);
 
 
-        new ProfileFragment.GetPlayerTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
+        try {
+            new ProfileFragment.GetPlayerTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
+        } catch (Exception e) {
+            Log.d(TAG, e.toString() + " Database offline");
+        }
+
 
         changeNameButton.setOnClickListener(new View.OnClickListener() {
             @Override
