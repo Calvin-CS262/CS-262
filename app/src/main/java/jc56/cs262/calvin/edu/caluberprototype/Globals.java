@@ -14,7 +14,7 @@ public class Globals {
         Globals.instance = instance;
     }
 
-    private int personId = 0;
+    private int personId = -1;
 
 
     private Globals() {}

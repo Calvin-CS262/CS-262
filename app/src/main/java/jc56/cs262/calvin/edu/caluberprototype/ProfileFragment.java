@@ -80,6 +80,8 @@ public class ProfileFragment extends Fragment {
                 new ProfileFragment.PutPlayerPassTask().execute(createURL(String.valueOf(Globals.getInstance().getValue())));
             }
         });
+
+//        Log.d(TAG, "person id is: " + String.valueOf(Globals.getInstance().getValue()));
     }
 
     @Nullable
@@ -106,7 +108,7 @@ public class ProfileFragment extends Fragment {
                     while ((line = reader.readLine()) != null) {
                         jsonText.append(line);
                     }
-                    //Log.d(TAG, jsonText.toString());
+                    Log.d(TAG, jsonText.toString());
                     if (jsonText.toString().startsWith("{ \"items\":")) {
                         // Google Cloud can't return a raw JSON list, so we had to add this "items" field;
                         // remove it now.
@@ -173,13 +175,13 @@ public class ProfileFragment extends Fragment {
     /**
      * Converts the JSON player data to an arraylist suitable for a listview adapter
      *
-     * @param players JSON array of player objects
+     * @param persons JSON array of person objects
      */
-    private void convertJSONtoArrayList(JSONArray players) {
-        Log.d(TAG, players.toString());
+    private void convertJSONtoArrayList(JSONArray persons) {
+//        Log.d(TAG, "Converting JSON: " + persons.toString());
         try {
-            for (int i = 0; i < players.length(); i++) {
-                JSONObject player = players.getJSONObject(i);
+            for (int i = 0; i < persons.length(); i++) {
+                JSONObject player = persons.getJSONObject(i);
                 personList.add(new Person(
                         player.getInt("personId"),
                         player.optString("email", "no email"),
@@ -191,7 +193,7 @@ public class ProfileFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, personList.toString());
+//        Log.d(TAG, "to array list: " + personList.toString());
     }
 
     //if a person's login information corresponds to what is saved in the database,

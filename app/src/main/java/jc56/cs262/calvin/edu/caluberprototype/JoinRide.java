@@ -227,7 +227,7 @@ public class JoinRide extends AppCompatActivity {
     /**
      * Converts the JSON ride data to an arraylist
      *
-     * @param passengers JSON array of player objects
+     * @param passengers JSON array of passenger objects
      */
     private void convertJSONtoPassenger(JSONArray passengers) {
         Log.d(TAG,passengers.toString());
@@ -306,11 +306,11 @@ public class JoinRide extends AppCompatActivity {
     /**
      * Converts the JSON ride data to an arraylist
      *
-     * @param rides JSON array of player objects
+     * @param rides JSON array of ride objects
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void convertJSONtoArrayList(JSONArray rides) {
-        Log.d(TAG,rides.toString());
+        Log.d(TAG,"rides JSON" + rides.toString());
         try {
             for (int i = 0; i < rides.length(); i++) {
                 JSONObject ride = rides.getJSONObject(i);
@@ -340,7 +340,7 @@ public class JoinRide extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG,rideList.toString());
+        Log.d(TAG,"ride list" + rideList.toString());
     }
 
     /**
